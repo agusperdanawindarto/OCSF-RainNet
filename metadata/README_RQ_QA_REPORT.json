@@ -1,0 +1,22 @@
+{
+  "checked_utc": "2026-11-22T04:08:31.864391+00:00",
+  "README_has_exact_paper_figures_1_to_3": true,
+  "exact_sha256_figure_count": 3,
+  "primary_result_figures_4_to_13": 10,
+  "experimental_confusion_figures": 18,
+  "experimental_training_curves": 18,
+  "public_tables_1_to_14": true,
+  "per_scene_metrics_rows": 360,
+  "rq_summary_rows": 3,
+  "best_checkpoints": 18,
+  "last_checkpoints": 18,
+  "broken_readme_links": 0,
+  "verified_model_runs": 18,
+  "public_raw_private_data_files": false,
+  "figure_chronology_warning": "Original Figure 2 says experimental stages were planned, reflecting the earlier manuscript draft; subsequent 18 runs are completed.",
+  "scientific_limitations": [
+    "Event-level independence remains unverified",
+    "Prior RainNet pretraining overlap remains unverified",
+    "All 18 audited experiments on Kaggle, comparisons against satellite IMERG"
+  ]
+}

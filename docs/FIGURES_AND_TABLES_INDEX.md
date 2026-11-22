@@ -1,23 +1,45 @@
-# Figure and table index
+# Research figures and tables
 
-- **Figure 1 (archival pilot):** \`figures/archive_pilot/Figure_1_pre_experiment.png\`; original single-image JPEG vs IMERG pilot (historical quality-control illustration, **not** the actual 2024 calibrated training input).
-- **Figure 2 (revised):** \`figures/methods/Figure_2_Research_Framework_Updated.png/.svg\` (127 actual calibrated inputs and finished experiments).
-- **Figure 3 (revised):** \`figures/methods/Figure_3_Model_Architecture_Updated.png/.svg\` (physically calibrated B13 input, two independently trained model variants and shared IMERG supervision).
-- **Figure 4:** \`figures/results/Figure_4_IMERG_127_Source_Class_Imbalance.png\`.
-- **Figure 5:** \`figures/results/Figure_5_Macro_IoU_3_Seeds.png\`.
-- **Figure 6:** \`figures/results/Figure_6_Severe_CSI_3_Seeds.png\`.
-- **Figure 7:** \`figures/results/Figure_7_Seed_Comparison_Macro_IoU.png\`.
-- **Figure 8:** \`figures/results/Figure_8_GPU_Inference_Latency.png\`.
-- **Figure 9:** \`figures/results/Figure_9_Per_Class_IoU.png\`.
-- All 18 separate confusion matrices and learning curves are archived in \`figures/results/confusion/\` and \`figures/results/learning_curves/\`.
-- **Table 1:** related prior work in \`tables/Table_01_Prior_Literature.md\`.
-- **Table 2:** source field inventory in \`tables/Table_02_IMERG_127_Source_Fields.csv\` and provenance in \`metadata/paired_scene_provenance.csv\`.
-- **Table 3:** fixed rainfall intensity thresholds in \`tables/Table_03_Class_Definitions.csv\`.
-- **Table 4:** graph parameter inventory in \`tables/Table_04_Model_Parameters.csv\`.
-- **Table 5:** held-out six-model mean ± SD in \`tables/Table_05_Mean_SD_6_Models.csv\`.
-- **Table 6:** eighteen per-seed results in \`tables/Table_06_All_18_Runs.csv\`.
-- **Table 7:** benchmark profiling in \`tables/Table_07_GPU_Inference_Profiling.csv\`.
+## Original figures from the attached manuscript
 
-All updated figures are author-generated visualizations of the locally archived research protocol/metrics; historic draft figures remain under \`figures/archive_pilot\` for traceability only.
+- [Figure 1](../figures/manuscript/Figure_1.png) — exact unmodified Word embedded PNG, SHA-256 verified
+- [Figure 2](../figures/manuscript/Figure_2.png) — exact unmodified Word embedded PNG, SHA-256 verified
+- [Figure 3](../figures/manuscript/Figure_3.png) — exact unmodified Word embedded PNG, SHA-256 verified
 
-**Figure 1 (actual experiment):** figures/methods/Figure_1_Calibrated_2024_Representative_Scene.png and .svg. Representative 3 May 2024 source scene (calibrated AHI B13 brightness temperature, IMERG rate, C0–C4 mask, class prevalence); not a model prediction.
+## Experimental figures 4–13
+
+- [Figure 4 — 127-field IMERG class imbalance](../figures/results/Figure_4_IMERG_127_Source_Class_Imbalance.png) (Source characterization)
+- [Figure 5 — Macro IoU across six architectures](../figures/results/Figure_5_Macro_IoU_3_Seeds.png) (RQ1 / RQ3)
+- [Figure 6 — Severe-rain CSI by architecture](../figures/results/Figure_6_Severe_CSI_3_Seeds.png) (RQ1 / RQ3)
+- [Figure 7 — Variation across seeds 42 / 123 / 2025](../figures/results/Figure_7_Seed_Comparison_Macro_IoU.png) (RQ3)
+- [Figure 8 — Kaggle GPU graph-inference latency](../figures/results/Figure_8_GPU_Inference_Latency.png) (RQ3: computational cost)
+- [Figure 9 — Held-out class-specific IoU C0–C4](../figures/results/Figure_9_Per_Class_IoU.png) (All RQs; severe-class limitation)
+- [Figure 10 — All-class ordinal MAE from confusion matrices](../figures/results/Figure_10_Ordinal_MAE_All_Classes.png) (RQ2)
+- [Figure 11 — Ordinal MAE conditional on true heavy/very-heavy labels](../figures/results/Figure_11_Ordinal_MAE_True_Severe.png) (RQ2)
+- [Figure 12 — Per-seed Macro IoU deltas versus RainNet](../figures/results/Figure_12_RQ_Seedwise_Delta_Macro_IoU.png) (RQ1 / RQ2 / RQ3)
+- [Figure 13 — Severe CSI across five held-out dates](../figures/results/Figure_13_Heldout_Date_Severe_CSI.png) (All RQs; limited test dates)
+
+## Complete figures for all six variants and three seeds
+
+- [18 confusion matrix PNGs](../figures/results/confusion)
+- [18 learning-curve PNGs](../figures/results/learning_curves)
+
+## Tables 1–14
+
+- [Table 1: Literature and RainNet lineage](../tables/Table_01_Prior_Literature.md)
+- [Table 2: All 127 IMERG source observations](../tables/Table_02_IMERG_127_Source_Fields.csv)
+- [Table 3a: Source class frequency (127 fields)](../tables/Table_03_127_Field_Class_Characterization.json)
+- [Table 3b: C0–C4 fixed class definitions](../tables/Table_03_Class_Definitions.csv)
+- [Table 4: Controlled parameter inventory](../tables/Table_04_Model_Parameters.csv)
+- [Table 5: Six models, mean and SD](../tables/Table_05_Mean_SD_6_Models.csv)
+- [Table 6: 18 per-seed result records](../tables/Table_06_All_18_Runs.csv)
+- [Table 7: Two sizes; latency and allocator](../tables/Table_07_GPU_Inference_Profiling.csv)
+- [Table 8: RQ2 per-run severity-distance errors](../tables/Table_08_Ordinal_Distance_Errors_18_Runs.csv)
+- [Table 9: Every class IoU/Dice for every run](../tables/Table_09_Per_Class_Overlap_18_Runs.csv)
+- [Table 10: 360 test-scene × run results](../tables/Table_10_Per_Scene_Results_360_Entries.csv)
+- [Table 11: 9 matched-seed RQ contrasts](../tables/Table_11_RQ_Paired_Seed_Deltas.csv)
+- [Table 12: Metrics, severity error and runtime summary](../tables/Table_12_RQ_All_Metrics_Mean_SD.csv)
+- [Table 13: Primary RQ deltas and stability counts](../tables/Table_13_RQ_Summary_Contrasts.csv)
+- [Table 14: Test-date variability](../tables/Table_14_Heldout_Date_Level_Metrics.csv)
+
+See README for inline RQ answers, full seed matrix and results gallery.

@@ -18,5 +18,11 @@
     "Weather-event independence and pretraining overlap pending",
     "C4 IoU nearly zero",
     "Archived manuscript needs revision"
-  ]
+  ],
+  "readme_restored_exact_manuscript_figures": true,
+  "rq_evidence_tables": 7,
+  "readme_primary_figures_1_to_13": 13,
+  "readme_per_run_figures": 36,
+  "readme_experiment_results_complete": true,
+  "audit_last_checked_utc": "2026-11-22T04:08:31.864391+00:00"
 }

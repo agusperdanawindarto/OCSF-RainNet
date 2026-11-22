@@ -1,0 +1,22 @@
+{
+  "source": "18 archived Kaggle held-out test_results.json + source Table_05/Table_06/Table_07",
+  "run_count": 18,
+  "seed_values": [
+    42,
+    123,
+    2025
+  ],
+  "test_dates": [
+    "2024-05-11",
+    "2024-06-03",
+    "2024-07-03",
+    "2024-08-11",
+    "2024-12-11"
+  ],
+  "ordinal_MAE_all_definition": "sum_ij |i-j|*confusion[i,j] / number of valid test cells",
+  "ordinal_MAE_severe_definition": "sum_i>=3,j |i-j|*confusion[i,j] / number of true C3/C4 cells",
+  "severe_underprediction_definition": "fraction of true C3/C4 cells predicted as C0/C1/C2",
+  "C4_recall_definition": "true C4 predicted as C4 divided by all true C4",
+  "sampling_unit_warning": "summary mean/SD across three model seeds; correlations among 20 scenes and 5 dates not equal to independent weather systems",
+  "limitation": "No standalone loss-only ablation; cannot causally isolate ordinal-penalty loss vs head, nor conclude operational hazard detection"
+}

@@ -1,0 +1,19 @@
+{
+  "source": "SN_Computer_Science_OCSF-RainNet(2).docx attached by the user",
+  "docx_sha256": "bcc541278221a9aa9f9faa99514a81c4451fbe7de725d96f6ab3f5a708992fd1",
+  "figures": [
+    {
+      "path": "figures/manuscript/Figure_1.png",
+      "sha256": "db4fc3549170c56fc688b5b2e17b0adfa2d181d2a6885ed65a0b476770c79c85"
+    },
+    {
+      "path": "figures/manuscript/Figure_2.png",
+      "sha256": "1926671935eb49d8b15fb0dd9afb628627e822692921299086f8b0ced5b06481"
+    },
+    {
+      "path": "figures/manuscript/Figure_3.png",
+      "sha256": "da0ebd5cc81a71e90476a832b7995701c8b379c57f37a91083f4ded91ec4c302"
+    }
+  ],
+  "note": "Unmodified historical manuscript figures; the 18-run experimental results were generated later."
+}
