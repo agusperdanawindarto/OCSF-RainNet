@@ -15,3 +15,7 @@ Mandatory editorial adjustments before submission:
 8. Submit through the journal system with the authors' approval, not by a GitHub repository commit.
 
 The legacy Word document retains native Mendeley citation fields by byte-for-byte copy. A revised submission-ready Word document has **not** been generated here.
+
+## Qualitative revision completed 2026-11-22
+
+The current Word manuscript now adds Methods 3.3.7, Results 4.8, Discussion 5.6, Figs. 10–14 (actual held-out predictions), Tables 11–12 and an explicit sampling/validity audit. Fields for Mendeley and math were preserved and checked structurally; paper still requires confirmation of declarations and external/generalization validity.

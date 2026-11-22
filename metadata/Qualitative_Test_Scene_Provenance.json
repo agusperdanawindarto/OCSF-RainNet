@@ -1,0 +1,30 @@
+{
+  "source": "Actual Kaggle seed-42 held-out NPZ predictions, not regenerated",
+  "published_for": "post-hoc qualitative diagnostic cases (not unbiased sample)",
+  "rain_groups": "severe = C3 or C4",
+  "cases": [
+    {
+      "scene": "20241211_2010",
+      "UTC_scene_time": "2024-12-11T20:10:00Z",
+      "selected_for": "localized positive severe-rain detection",
+      "ROI": "rows 0-63, columns 75-170",
+      "source_NPZ_SHA256": "e5c8d253a13fa7fd60933b0369cbe2a888fec02c24552f1ba6affd35b30758a4"
+    },
+    {
+      "scene": "20240603_1410",
+      "UTC_scene_time": "2024-06-03T14:10:00Z",
+      "selected_for": "missed severe rain across all four variants",
+      "ROI": "rows 42-105, columns 209-304",
+      "source_NPZ_SHA256": "8b819d76929d2c6ab781c38c92af119671a6037c6808c7a51b3cbc350e36ab09"
+    },
+    {
+      "scene": "20240811_0210",
+      "UTC_scene_time": "2024-08-11T02:10:00Z",
+      "selected_for": "fusion-only outperforming the proposed model",
+      "ROI": "rows 0-63, columns 77-172",
+      "source_NPZ_SHA256": "8a3d6784b2e9144003b0f026b9ae4a400187de86103463b705c0fcec402863dc"
+    }
+  ],
+  "roi_table": "Table_11_Qualitative_ROI_Severe_Error.csv",
+  "full_scene_table": "Table_12_Matched_Full_Scene_Severe_Metrics.csv"
+}

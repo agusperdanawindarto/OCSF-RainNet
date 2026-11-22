@@ -1,0 +1,13 @@
+scene,selection,seed,ROI_top,ROI_left,ROI_size,model,TP,FP,FN,CSI,C4_ground_truth,C4_correct
+20241211_2010,localized positive severe-rain detection,42,0,75,64x96,plain,0,0,287,0.0,60,0
+20241211_2010,localized positive severe-rain detection,42,0,75,64x96,fusion,31,36,256,0.09597523219814241,60,0
+20241211_2010,localized positive severe-rain detection,42,0,75,64x96,ordinal,79,72,208,0.2200557103064067,60,0
+20241211_2010,localized positive severe-rain detection,42,0,75,64x96,proposed,133,133,154,0.31666666666666665,60,0
+20240603_1410,missed severe rain across all four variants,42,42,209,64x96,plain,0,0,156,0.0,25,0
+20240603_1410,missed severe rain across all four variants,42,42,209,64x96,fusion,0,1,156,0.0,25,0
+20240603_1410,missed severe rain across all four variants,42,42,209,64x96,ordinal,0,1,156,0.0,25,0
+20240603_1410,missed severe rain across all four variants,42,42,209,64x96,proposed,0,0,156,0.0,25,0
+20240811_0210,fusion-only outperforming the proposed model,42,0,77,64x96,plain,0,0,301,0.0,102,0
+20240811_0210,fusion-only outperforming the proposed model,42,0,77,64x96,fusion,101,92,200,0.25699745547073793,102,0
+20240811_0210,fusion-only outperforming the proposed model,42,0,77,64x96,ordinal,52,25,249,0.15950920245398773,102,0
+20240811_0210,fusion-only outperforming the proposed model,42,0,77,64x96,proposed,21,19,280,0.065625,102,0

@@ -43,3 +43,7 @@
 - [Table 14: Test-date variability](../tables/Table_14_Heldout_Date_Level_Metrics.csv)
 
 See README for inline RQ answers, full seed matrix and results gallery.
+
+## Qualitative testing update 2026-11-22
+
+Manuscript Figs. 10–14 from genuine Kaggle held-out predictions are in figures/manuscript_qualitative/. Tables 11–12 give severe confusion in post-hoc selected 64x96 ROIs and matched full-scene scores. See docs/QUALITATIVE_TEST_PREDICTIONS.md. Old Figure_10–13 filenames in figures/results are auxiliary plots, not revised manuscript Fig. 10–14.

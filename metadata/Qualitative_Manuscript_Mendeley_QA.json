@@ -1,0 +1,27 @@
+{
+  "source": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\PAPER SPRINGER\\SN_Computer_Science_OCSF-RainNet.docx",
+  "output": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\PAPER SPRINGER\\SN_Computer_Science_OCSF-RainNet(6)_Qualitative_Top_Tier.docx",
+  "source_sha256": "63bd8db16188e82468197187f95fe3643759fc6299b4b0decf98c9de33f4e642",
+  "output_sha256": "e7bc868503ee1157a6cffbbe9a3cfc72c89d092b3775fbab1f0b4300dd7beea0",
+  "source_bytes": 4978650,
+  "output_bytes": 5982510,
+  "native_Mendeley_Word_field_instructions_preserved": 44,
+  "word_field_nodes_preserved": 132,
+  "OMML_nodes_preserved": 107,
+  "tables_source": 27,
+  "tables_revised": 29,
+  "inline_images_source": 9,
+  "inline_images_revised": 14,
+  "new_qualitative_figures": [
+    "Figure_10_Qualitative_gain.png",
+    "Figure_11_Qualitative_failure.png",
+    "Figure_12_Qualitative_counterexample.png",
+    "Figure_13_Severe_Rain_TP_FP_FN.png",
+    "Figure_14_Ordinal_Distance_Error_Maps.png"
+  ],
+  "supporting_tables": [
+    "Table_11_Qualitative_ROI_Severe_Error.csv",
+    "Table_12_Matched_Full_Scene_Severe_Metrics.csv"
+  ],
+  "QA_note": "Scientifically valid archival images; post-hoc samples explicitly labeled; no additional rainfall training or fabricated accuracy"
+}

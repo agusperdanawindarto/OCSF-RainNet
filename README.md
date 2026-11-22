@@ -30,6 +30,24 @@ The architecture is displayed exactly as in the paper: separate RainNet control 
 
 **Additional, post-experiment methodology figures (not substituted above):** [calibrated HSD representative scene](figures/methods/Figure_1_Calibrated_2024_Representative_Scene.png), [revised framework](figures/methods/Figure_2_Research_Framework_Updated.png), [revised method architecture](figures/methods/Figure_3_Model_Architecture_Updated.png).
 
+## New held-out image evidence (manuscript Figures 10–14)
+
+The revised manuscript and all figures below use actual seed-42 held-out predictions from the 18 Kaggle experiments. The Figure 1–3 images above are preserved unchanged.
+
+**[Download latest complete Springer manuscript (DOCX)](manuscript/current_revision/OCSF_RainNet_Springer_Qualitative_Revision_2026-11-22.docx)**
+
+![Figure 10 — positive severe detection](figures/manuscript_qualitative/Figure_10_Qualitative_gain.png)
+
+- [Figure 11: all-model failure](figures/manuscript_qualitative/Figure_11_Qualitative_failure.png)
+- [Figure 12: fusion-only counterexample](figures/manuscript_qualitative/Figure_12_Qualitative_counterexample.png)
+- [Figure 13: true/false positive and missed severe pixels](figures/manuscript_qualitative/Figure_13_Severe_Rain_TP_FP_FN.png)
+- [Figure 14: ordinal-distance error maps](figures/manuscript_qualitative/Figure_14_Ordinal_Distance_Error_Maps.png)
+- [Table 11: 12 selected-ROI confusion rows](tables/Table_11_Qualitative_ROI_Severe_Error.csv)
+- [Table 12: the 12 matched full-scene evaluation rows](tables/Table_12_Matched_Full_Scene_Severe_Metrics.csv)
+- [Provenance manifest, case selection, and limitations](docs/QUALITATIVE_TEST_PREDICTIONS.md)
+
+The three examples were selected post hoc, not randomly: a local gain (2024-12-11 20:10 UTC), a complete severe miss (2024-06-03 14:10 UTC), and a fusion-only advantage (2024-08-11 02:10 UTC). All comparisons use the same 64x96-pixel ROI per scene, seed 42, and original IMERG target. Quantitative claims remain based on all held-out scenes and all three seeds. No independent BMKG rain-gauge or radar truth was used.
+
 ## RQ1–RQ3: experimentally supported answers
 
 The manuscript Introduction asks (RQ1) whether gated cross-scale fusion improves localized high-intensity regions; (RQ2) whether an ordinal head reduces intensity-severity classification errors; and (RQ3) whether fusion plus ordinal modeling gives consistent benefits without excessive complexity. Comparisons below use the same train/validation/test dates and seeds **42, 123, 2025**.

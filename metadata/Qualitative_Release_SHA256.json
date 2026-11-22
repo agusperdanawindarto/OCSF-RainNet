@@ -1,0 +1,57 @@
+[
+  {
+    "path": "manuscript/current_revision/OCSF_RainNet_Springer_Qualitative_Revision_2026-11-22.docx",
+    "bytes": 5982510,
+    "sha256": "e7bc868503ee1157a6cffbbe9a3cfc72c89d092b3775fbab1f0b4300dd7beea0"
+  },
+  {
+    "path": "tables/Table_11_Qualitative_ROI_Severe_Error.csv",
+    "bytes": 1367,
+    "sha256": "6a28aa01f896f58042b3281f8e294fa39cdd6143e1a37c4a06812f77554b7901"
+  },
+  {
+    "path": "tables/Table_12_Matched_Full_Scene_Severe_Metrics.csv",
+    "bytes": 967,
+    "sha256": "f637ecf4c7811d49a9908b647735490fc3917b70996e82df1d168391ba68fd36"
+  },
+  {
+    "path": "metadata/Qualitative_Test_Scene_Provenance.json",
+    "bytes": 1274,
+    "sha256": "6e09e8f488a80472d0d6e49a42cba09a28921ce5bbbdfef39c6a47eeed9dae5d"
+  },
+  {
+    "path": "metadata/Qualitative_Manuscript_Mendeley_QA.json",
+    "bytes": 1255,
+    "sha256": "18f71b2f9591c1f52c98a6bb4fd23d1bb1022bf7b2b0acd6b27c0f147ac7a3b7"
+  },
+  {
+    "path": "src/plotting/generate_ocsf_actual_qualitative_figures.py",
+    "bytes": 10180,
+    "sha256": "f672dde76ddfb55cd73d0127a268303e3956284aa69a06a34c0b18c8b5b8e77b"
+  },
+  {
+    "path": "figures/manuscript_qualitative/Figure_10_Qualitative_gain.png",
+    "bytes": 612338,
+    "sha256": "c062550a8b9bcb2284ca718c82d5bb7e345af520cf84f6c4a67762fc13587ca1"
+  },
+  {
+    "path": "figures/manuscript_qualitative/Figure_11_Qualitative_failure.png",
+    "bytes": 625878,
+    "sha256": "809c1c57388f6a53c1373b86b91f8c0a9c81d582a5059f3a556b8c597e869d69"
+  },
+  {
+    "path": "figures/manuscript_qualitative/Figure_12_Qualitative_counterexample.png",
+    "bytes": 610669,
+    "sha256": "bb790edbd8a5a8fbc7666462712fe32041224aa99b2d4cfe8e110ba0401ad494"
+  },
+  {
+    "path": "figures/manuscript_qualitative/Figure_13_Severe_Rain_TP_FP_FN.png",
+    "bytes": 458176,
+    "sha256": "87d7732945525d70e22b6897b3dec1fd1a7bec56777fb523fb7f1d08fc2ea727"
+  },
+  {
+    "path": "figures/manuscript_qualitative/Figure_14_Ordinal_Distance_Error_Maps.png",
+    "bytes": 207454,
+    "sha256": "03bf221869793728b937c0de6ce75e81edd4cd5846e3e0b14ae155148b4fdefa"
+  }
+]
