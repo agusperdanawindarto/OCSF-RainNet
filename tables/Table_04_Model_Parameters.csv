@@ -1,0 +1,8 @@
+model,parameters,role
+Original RainNet binary,142617,Pretraining ancestor
+plain,142637,Five-class control
+fusion,148234,Fusion-only ablation
+ordinal,142632,Ordinal-only ablation
+proposed,148217,OCSF-RainNet
+unet,485853,External U-Net
+raunet,508249,RA-UNet-style

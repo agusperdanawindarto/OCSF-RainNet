@@ -1,0 +1,7 @@
+class,rate_condition_mm_h,interpretation
+C0,0 <= r < 1,No or very light estimated precipitation
+C1,1 <= r < 5,Light
+C2,5 <= r < 10,Moderate
+C3,10 <= r <= 20,Heavy
+C4,r > 20,Very heavy
+255,invalid / missing,Excluded from loss and metrics

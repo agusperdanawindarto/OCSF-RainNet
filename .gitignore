@@ -1,0 +1,26 @@
+# Local data and credentials MUST stay off public GitHub
+*.part
+*.tmp
+.env
+.env.*
+*.json.secret
+kaggle.json
+.nasa*
+.netrc
+credentials*
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+raw/
+processed/
+private_data/
+data/raw/
+data/private/
+*.hdf5
+*.h5py
+*.nc
+*.npz
+*.bz2
+*.zip
+logs/
+# Exceptions for original archived paper draft and supported best/last model weights

@@ -1,0 +1,22 @@
+{
+  "checked_utc": "2026-11-22T03:56:25.295467+00:00",
+  "verified_training_runs": 18,
+  "paired_source_scenes": 127,
+  "utc_dates": 32,
+  "best_checkpoints": 18,
+  "last_checkpoints": 18,
+  "confusion_figures": 18,
+  "learning_curves": 18,
+  "notebooks": 6,
+  "mendeley_fields": 43,
+  "private_satellite_data_published": false,
+  "literal_secrets_detected": false,
+  "files": 238,
+  "size_MB": 77.67,
+  "limitations": [
+    "Satellite-derived IMERG target, not BMKG ground truth",
+    "Weather-event independence and pretraining overlap pending",
+    "C4 IoU nearly zero",
+    "Archived manuscript needs revision"
+  ]
+}

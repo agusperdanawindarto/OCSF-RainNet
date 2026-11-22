@@ -1,0 +1,157 @@
+{
+  "summary": {
+    "generated_utc": "2026-11-22T03:40:12.423222+00:00",
+    "expected": 18,
+    "verified": 18,
+    "missing_or_failed": [],
+    "training_completed_kaggle_reported": 18,
+    "dataset_sha256_values": [
+      "df8a0763cc88fc2fa4daaceeeb8fe0be1d966c92e57bd5d2b7b5ca131730ab97"
+    ],
+    "test_dates": [
+      "2024-05-11",
+      "2024-06-03",
+      "2024-07-03",
+      "2024-08-11",
+      "2024-12-11"
+    ],
+    "source_folders": [
+      "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs",
+      "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16"
+    ],
+    "caveats": [
+      "Satellite IMERG V07B is estimated supervisory truth; not independent gauge observations",
+      "UTC-date disjoint is not guaranteed meteorological event disjoint",
+      "Publication claims require final consistency and pretraining overlap audit"
+    ],
+    "report_created": true
+  },
+  "runs": [
+    {
+      "run_id": "plain_s42",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\ocsf-rainnet-fit-plain-seed-42\\OCSF_plain_s42_test_results.json",
+      "best_weights_bytes": 830584,
+      "test_predictions_bytes": 14001215
+    },
+    {
+      "run_id": "plain_s123",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_plain_s123_test_results.json",
+      "best_weights_bytes": 830584,
+      "test_predictions_bytes": 15008903
+    },
+    {
+      "run_id": "plain_s2025",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_plain_s2025_test_results.json",
+      "best_weights_bytes": 830584,
+      "test_predictions_bytes": 15314535
+    },
+    {
+      "run_id": "fusion_s42",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\ocsf-rainnet-fit-fusion-seed-42\\OCSF_fusion_s42_test_results.json",
+      "best_weights_bytes": 880992,
+      "test_predictions_bytes": 15314382
+    },
+    {
+      "run_id": "fusion_s123",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_fusion_s123_test_results.json",
+      "best_weights_bytes": 880992,
+      "test_predictions_bytes": 14785576
+    },
+    {
+      "run_id": "fusion_s2025",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_fusion_s2025_test_results.json",
+      "best_weights_bytes": 880992,
+      "test_predictions_bytes": 15042802
+    },
+    {
+      "run_id": "ordinal_s42",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_ordinal_s42_test_results.json",
+      "best_weights_bytes": 832320,
+      "test_predictions_bytes": 12020887
+    },
+    {
+      "run_id": "ordinal_s123",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_ordinal_s123_test_results.json",
+      "best_weights_bytes": 832320,
+      "test_predictions_bytes": 15029431
+    },
+    {
+      "run_id": "ordinal_s2025",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_ordinal_s2025_test_results.json",
+      "best_weights_bytes": 832320,
+      "test_predictions_bytes": 15152955
+    },
+    {
+      "run_id": "proposed_s42",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_proposed_s42_test_results.json",
+      "best_weights_bytes": 882728,
+      "test_predictions_bytes": 15069055
+    },
+    {
+      "run_id": "proposed_s123",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_proposed_s123_test_results.json",
+      "best_weights_bytes": 882728,
+      "test_predictions_bytes": 14866044
+    },
+    {
+      "run_id": "proposed_s2025",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_proposed_s2025_test_results.json",
+      "best_weights_bytes": 882728,
+      "test_predictions_bytes": 15189391
+    },
+    {
+      "run_id": "unet_s42",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_unet_s42_test_results.json",
+      "best_weights_bytes": 2042192,
+      "test_predictions_bytes": 13602491
+    },
+    {
+      "run_id": "unet_s123",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_unet_s123_test_results.json",
+      "best_weights_bytes": 2042192,
+      "test_predictions_bytes": 14083617
+    },
+    {
+      "run_id": "unet_s2025",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_unet_s2025_test_results.json",
+      "best_weights_bytes": 2042192,
+      "test_predictions_bytes": 13682000
+    },
+    {
+      "run_id": "raunet_s42",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_raunet_s42_test_results.json",
+      "best_weights_bytes": 2195968,
+      "test_predictions_bytes": 14256464
+    },
+    {
+      "run_id": "raunet_s123",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_raunet_s123_test_results.json",
+      "best_weights_bytes": 2195968,
+      "test_predictions_bytes": 14935871
+    },
+    {
+      "run_id": "raunet_s2025",
+      "status": "VERIFIED",
+      "result_path": "D:\\DISERTASI_S3\\SEGMENTASI_HUJAN\\experiments\\OCSF_2024_All_18_Train_Runs\\master16\\OCSF_raunet_s2025_test_results.json",
+      "best_weights_bytes": 2195968,
+      "test_predictions_bytes": 13677575
+    }
+  ]
+}

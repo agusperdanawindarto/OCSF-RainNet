@@ -1,0 +1,72 @@
+{
+  "run_id": "ordinal_s2025",
+  "variant": "ordinal",
+  "seed": 2025,
+  "status": "COMPLETE",
+  "start_utc": "2026-11-21T07:24:21.648338+00:00",
+  "source": "NOAA/JMA calibrated Himawari-9 AHI B13 matched to GPM IMERG Final V07B",
+  "data_identifier": "agusperdana/ocsf-rainnet-calibrated-2024",
+  "dataset_archive_sha256": "df8a0763cc88fc2fa4daaceeeb8fe0be1d966c92e57bd5d2b7b5ca131730ab97",
+  "pretrained_rainnet_sha256": "71e0e6d7e0fa9fa6f541c89f1bfcc57d701bd94730e0508c2dbf45c341de575f",
+  "input": "float32 grayscale derived from calibrated Kelvin, three identical channels",
+  "class_labels": "C0 [0,1), C1 [1,5), C2 [5,10), C3 [10,20], C4 (20,infinity) mm/h; 255 ignored",
+  "split_rule": "UTC date disjoint before crop; splits frozen in dataset",
+  "train_val_test_count": {
+    "train": 88,
+    "validation": 19,
+    "test": 20
+  },
+  "date_count": {
+    "train": 22,
+    "validation": 5,
+    "test": 5
+  },
+  "train_class_counts": [
+    6897216,
+    460413,
+    77729,
+    24091,
+    5239
+  ],
+  "train_class_weights": [
+    0.1338327437063639,
+    0.5179949266491856,
+    1.2606883942844327,
+    1.5437419676800086,
+    1.5437419676800086
+  ],
+  "max_epochs": 25,
+  "batch_size": 2,
+  "crops_per_train_scene_per_epoch": 4,
+  "crop_shape": [
+    128,
+    128
+  ],
+  "learning_rates": {
+    "warmup": 0.001,
+    "finetune": 0.0001
+  },
+  "frozen_pretrained_epochs": 5,
+  "early_stopping_patience": 4,
+  "loss": "train-frequency sqrt inverse capped 12 and normalized x masked CE +0.12 ordinal severity L1",
+  "validation": "all 19 complete val scenes padded to multiple of 16, never test",
+  "test": "20 complete independent-date scenes only after best val checkpoint",
+  "dataset_admissibility": "radiometric/timestamp QC passed, broader source-independence caveats remain",
+  "software": {
+    "tensorflow": "2.21.0",
+    "python": "3.13.16"
+  },
+  "gpu_devices": [
+    "/physical_device:GPU:0",
+    "/physical_device:GPU:1"
+  ],
+  "parameters": 142632,
+  "last_epoch": 25,
+  "best_epoch": 25,
+  "best_validation_loss": 0.43987310011135905,
+  "updated_utc": "2026-11-21T07:26:20.198835+00:00",
+  "finished_utc": "2026-11-21T07:26:25.254374+00:00",
+  "test_macro_iou": 0.2720159645340256,
+  "test_macro_dice": 0.3356749046040887,
+  "test_severe_csi": 0.0
+}

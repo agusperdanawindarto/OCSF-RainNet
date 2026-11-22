@@ -1,0 +1,11 @@
+# Actual completed Kaggle environment: Python 3.13.16, TensorFlow 2.21.0 (verify availability by platform)
+tensorflow==2.21.0
+numpy
+pandas
+scipy
+matplotlib
+h5py
+# CPU-only Himawari HSD preprocessing via Satpy
+satpy
+pyresample
+dask
