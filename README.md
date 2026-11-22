@@ -109,9 +109,11 @@ For the severe-event binary collapse, `TPs = sum_(i in S,j in S) M[i,j]`, `FNs =
 
 ---
 
-## Figures 1–3: exact images from the attached Springer manuscript
+## Figures 1–3: corrected to the final V8 Springer manuscript
 
-The following **three unchanged original PNGs** are byte-for-byte identical to the figures embedded in the attached Word manuscript. Their checksums are in [source figure verification](metadata/MANUSCRIPT_FIGURE_VERIFICATION.json). The images were not redesigned or substituted.
+Figure 1 remains the separately labeled historical January 2024 pilot. **Figures 2 and 3 now display the completed-study illustrations corresponding to the V8 Springer manuscript**, rather than the earlier draft (which incorrectly implied that training was incomplete and pictured the legacy JPEG input). The original pre-V8 figure files remain under [legacy_preV8](figures/manuscript/legacy_preV8); [original-figure provenance](metadata/MANUSCRIPT_FIGURE_VERIFICATION.json) is preserved. The revised artwork is available in both [PNG and vector SVG](metadata/MANUSCRIPT_FIGURE_V8_VERIFICATION.json). V8 source figure content and layout were verified against the Word-embedded source; repository PNGs were freshly rasterized from those vectors and are **not claimed to be byte-identical to the DOCX-embedded PNG files**.
+
+**Figure narratives below follow the revised manuscript:** a short introduction precedes each figure, followed by the caption and an interpretation limited to the completed experiments.
 
 ### Figure 1. Dataset characterization of the 7 January 2024 pilot
 
@@ -119,25 +121,37 @@ The following **three unchanged original PNGs** are byte-for-byte identical to t
 
 The original pilot illustrates the archived JPEG, IMERG rate, thresholded five-class target, and class distribution; this is not the input dataset used by the later full calibrated experiment.
 
-### Figure 2. Research framework and novelty development from the manuscript
+### Figure 2. Completed calibrated research framework (manuscript V8)
 
-![Original Figure 2 from the manuscript](figures/manuscript/Figure_2.png)
+Figure 2 traces the common source screening and date-disjoint assignment, the four RainNet-family architectural variants, the two external comparators and the shared held-out evaluation. All six models receive the same 127 calibrated HSD–IMERG pairs, fixed train/validation/test partitions and five IMERG categories, with training repeated at seeds 42, 123 and 2025.
 
-The dashed planned/not-trained stages show the **historical draft status**. They have since been completed in 18 documented Kaggle runs. The original figure is deliberately preserved unchanged.
+![Figure 2 V8 — calibrated Himawari–IMERG research framework, six model branches and 18 completed GPU runs](figures/manuscript/Figure_2.png)
 
-### Figure 3. Original OCSF-RainNet architecture and multiclass RainNet baseline
+*Fig. 2. Research framework for the completed 2024 HSD-calibrated Himawari–IMERG study. The same 127 source–target pairs, UTC-date partitions and IMERG labels are shared across the RainNet baseline, fusion-only, ordinal-only, combined OCSF-RainNet and two external comparators. Eighteen GPU runs were completed; event independence and pretraining overlap remain methodological limitations.*
 
-![Original Figure 3 from the manuscript](figures/manuscript/Figure_3.png)
+The schematic represents completed model comparisons, **not** six independently collected test sets. Arrows merge into the same held-out evaluation. The V8 [digital-duplication / temporal-proximity audit](docs/EVENT_AND_PRETRAINING_AUDIT_2026-11-22.md) provides additional evidence but does not establish independent meteorological systems.
 
-The architecture is displayed exactly as in the paper: separate RainNet control and proposed output branches with the common NASA IMERG V07B target. Its pictured RGB/JPEG input is a historical pilot; the actual full experiment uses calibrated HSD B13 brightness-temperature inputs.
+[Open Fig. 2 vector source](figures/manuscript/Figure_2_V8.svg) · [Historical pre-V8 Fig. 2](figures/manuscript/legacy_preV8/Figure_2.png).
 
-**Additional, post-experiment methodology figures (not substituted above):** [calibrated HSD representative scene](figures/methods/Figure_1_Calibrated_2024_Representative_Scene.png), [revised framework](figures/methods/Figure_2_Research_Framework_Updated.png), [revised method architecture](figures/methods/Figure_3_Model_Architecture_Updated.png).
+### Figure 3. Task-matched RainNet control versus proposed OCSF-RainNet (manuscript V8)
+
+Figure 3 compares **two separately optimized networks** with the same checkpoint-derived residual RainNet encoder, bridge and decoder. Both receive calibrated Himawari-9 AHI Band 13 brightness-temperature inputs (replicated across three channels for checkpoint compatibility) and the same IMERG V07B five-category targets. The task-matched control uses a five-class softmax head; OCSF-RainNet adds the context-gated cross-scale skip-feature fusion and an ordered cumulative-exceedance output head.
+
+![Figure 3 V8 — architecture of the five-class RainNet control and proposed OCSF-RainNet, with gold proposed modules](figures/manuscript/Figure_3.png)
+
+*Fig. 3. Architecture of the task-matched multiclass RainNet control and OCSF-RainNet, both trained separately using the same calibrated Himawari-9 AHI Band 13 brightness-temperature inputs and NASA IMERG V07B five-category targets. The gold modules denote context-gated cross-scale fusion and the ordered cumulative-exceedance head; pale-blue modules denote inherited RainNet features. Model performance must be read from held-out evaluation, not this schematic.*
+
+Pale-blue boxes indicate inherited features; gold boxes identify the proposed components, **not proven performance gains**. RainNet has **142,637 parameters** versus **148,217** for OCSF-RainNet (+5,580; +3.91%). Fusion-only and ordinal-only ablations, as well as U-Net and RA-UNet-style references, are defined in Fig. 2 and evaluated quantitatively in the held-out results.
+
+[Open Fig. 3 vector source](figures/manuscript/Figure_3_V8.svg) · [Historical pre-V8 Fig. 3](figures/manuscript/legacy_preV8/Figure_3.png).
+
+**Method figure copies and legacy records:** [calibrated HSD scene](figures/methods/Figure_1_Calibrated_2024_Representative_Scene.png), [V8 framework copy](figures/methods/Figure_2_Research_Framework_Updated.png), and [V8 architecture copy](figures/methods/Figure_3_Model_Architecture_Updated.png). Older method drawings are retained under [methods/legacy_preV8](figures/methods/legacy_preV8). See the [V8 figure metadata](metadata/MANUSCRIPT_FIGURE_V8_VERIFICATION.json) for source-image hashes and rasterization provenance.
 
 ## New held-out image evidence (revised manuscript Figures 10–14, distinct from supplementary result plots)
 
-The revised manuscript and all figures below use actual seed-42 held-out predictions from the 18 Kaggle experiments. The Figure 1–3 images above are preserved unchanged.
+The revised qualitative figures below use actual held-out seed-42 predictions. Figure 1 remains the labeled historical pilot, while Figures 2 and 3 above have been synchronized to manuscript V8; earlier figures remain in the legacy folders.
 
-**[Read latest revised Springer manuscript (DOCX; author declarations and external validity checks pending)](manuscript/current_revision/OCSF_RainNet_Springer_Qualitative_Revision_2026-11-22.docx)**
+[Earlier qualitative manuscript version (archived DOCX; **not V8**)](manuscript/current_revision/OCSF_RainNet_Springer_Qualitative_Revision_2026-11-22.docx). Use the independent final V8 Word source for journal conversion; its final source file is not yet mirrored into this repository.
 
 ![Figure 10 — positive severe detection](figures/manuscript_qualitative/Figure_10_Qualitative_gain.png)
 

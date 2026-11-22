@@ -7,13 +7,13 @@
       "sha256": "db4fc3549170c56fc688b5b2e17b0adfa2d181d2a6885ed65a0b476770c79c85"
     },
     {
-      "path": "figures/manuscript/Figure_2.png",
+      "path": "figures/manuscript/legacy_preV8/Figure_2.png",
       "sha256": "1926671935eb49d8b15fb0dd9afb628627e822692921299086f8b0ced5b06481"
     },
     {
-      "path": "figures/manuscript/Figure_3.png",
+      "path": "figures/manuscript/legacy_preV8/Figure_3.png",
       "sha256": "da0ebd5cc81a71e90476a832b7995701c8b379c57f37a91083f4ded91ec4c302"
     }
   ],
-  "note": "Unmodified historical manuscript figures; the 18-run experimental results were generated later."
+  "note": "Legacy historical Word figures. Fig. 1 remains in canonical location; old Fig. 2/3 PNGs moved to legacy_preV8 with identical original SHA-256. Canonical Figure_2.png and Figure_3.png are V8 replacements; see MANUSCRIPT_FIGURE_V8_VERIFICATION.json."
 }

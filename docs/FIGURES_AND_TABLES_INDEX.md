@@ -1,10 +1,12 @@
 # Research figures and tables
 
-## Original figures from the attached manuscript
+## Manuscript-aligned figures (V8) and retained legacy sources
 
 - [Figure 1](../figures/manuscript/Figure_1.png) — exact unmodified Word embedded PNG, SHA-256 verified
-- [Figure 2](../figures/manuscript/Figure_2.png) — exact unmodified Word embedded PNG, SHA-256 verified
-- [Figure 3](../figures/manuscript/Figure_3.png) — exact unmodified Word embedded PNG, SHA-256 verified
+- [Figure 2 — V8 completed research framework](../figures/manuscript/Figure_2.png) — 127 paired scenes, six model configurations, 18 completed GPU runs; [SVG](../figures/manuscript/Figure_2_V8.svg)
+- [Figure 3 — V8 task-matched control and OCSF-RainNet architecture](../figures/manuscript/Figure_3.png) — inherited backbone versus proposed fusion and ordinal head; [SVG](../figures/manuscript/Figure_3_V8.svg)
+
+Original figure 2/3 files from the earlier draft remain at [figures/manuscript/legacy_preV8](../figures/manuscript/legacy_preV8) and are recorded in [legacy hash manifest](../metadata/MANUSCRIPT_FIGURE_VERIFICATION.json). The updated V8 PNGs are re-rasterized from verified source vector content, not claimed byte-identical to Word-embedded PNGs; [V8 provenance](../metadata/MANUSCRIPT_FIGURE_V8_VERIFICATION.json).
 
 ## Experimental figures 4–13
 

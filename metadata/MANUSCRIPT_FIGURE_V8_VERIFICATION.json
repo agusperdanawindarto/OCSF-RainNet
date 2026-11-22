@@ -1,0 +1,35 @@
+{
+  "manuscript_version": "V8 (retrospective event and checkpoint audit)",
+  "manuscript_filename": "SN_Computer_Science_OCSF_RainNet_V8_Event_Pretraining_Audited.docx",
+  "manuscript_sha256": "a9925780e61c5b1e96609b933fe5e9f10bea20da481e057558a513aada10d1a8",
+  "method": "V8 figures 2 and 3 were extracted from the authored DOCX in the model workspace; regenerated from the source SVG whose rendered pixel arrays were verified as exact matches to the DOCX rasters after cropping 232px and 202px. GitHub PNGs are re-rasterized with resvg rather than byte-identical PNG copies.",
+  "status": "source figure layout/content verified; regenerated PNGs need visual inspection",
+  "figures": [
+    {
+      "figure": 2,
+      "canonical_png": "figures/manuscript/Figure_2.png",
+      "canonical_png_sha256": "4b72f62f5a1e3c850ab9afb1b0974e1f90580eb0150d1d3f25d8daaaf4fe8dc8",
+      "vector_svg": "figures/manuscript/Figure_2_V8.svg",
+      "v8_embedded_raster_sha256": "b03bf6cdf2e356fb941a99c5eafd0361790415939769a3c2332c07437829cef0",
+      "rasterization": "resvg-py, 600-dpi PNG, same vector content and manuscript crop",
+      "size_px": [
+        6600,
+        4238
+      ],
+      "legacy_png": "figures/manuscript/legacy_preV8/Figure_2.png"
+    },
+    {
+      "figure": 3,
+      "canonical_png": "figures/manuscript/Figure_3.png",
+      "canonical_png_sha256": "36d7e25a64d1c857e1372d3df18e40bb18c1b19a13c3d418b31463a9553212ba",
+      "vector_svg": "figures/manuscript/Figure_3_V8.svg",
+      "v8_embedded_raster_sha256": "bbf0f3a5b396bec0461a4bbd0f6b00dd739ac006822d94e5ffc9302d9d73c690",
+      "rasterization": "resvg-py, 600-dpi PNG, same vector content and manuscript crop",
+      "size_px": [
+        5460,
+        5048
+      ],
+      "legacy_png": "figures/manuscript/legacy_preV8/Figure_3.png"
+    }
+  ]
+}
