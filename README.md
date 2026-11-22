@@ -4,7 +4,26 @@
 
 Reproducibility package supporting a manuscript intended for *SN Computer Science* (Springer Nature). **127 calibrated Himawari–IMERG pairs, 32 UTC dates, and 18/18 finished and audited Kaggle model×seed experiments.**
 
-> These are comparisons against NASA GPM IMERG Final V07B **satellite-estimated rainfall labels**, not independent BMKG observations. The C4 very-heavy class remains nearly undetected; meteorological-event independence and overlap with the RainNet pretraining collection have not been fully validated.
+> These are comparisons against NASA GPM IMERG Final V07B **satellite-estimated rainfall labels**, not independent BMKG observations. The C4 very-heavy class remains nearly undetected. A retrospective V8 audit ruled out exact checked cross-split digital duplicates and identified a matching pre-2024 historical RainNet checkpoint, but **meteorological-event independence and exhaustive item-level pretraining provenance remain unverified**. See the [event/provenance audit](docs/EVENT_AND_PRETRAINING_AUDIT_2026-11-22.md).
+
+## Retrospective split integrity and checkpoint provenance (V8 audit, 2026-11-22)
+
+**Why this audit matters:** The manuscript's 18 completed GPU runs used frozen UTC-date-disjoint data partitions. A subsequent, retrospective audit assessed **exact sample leakage**, **temporal proximity**, and **historical checkpoint provenance**; it did **not** change the 127 source–target scenes, train/validation/test split, three seeds, validation-selected weights, or held-out performance scores. It is documented in manuscript **Methods §3.1.5, Results §4.9 and Table 13**.
+
+| Audit question | Evidence from the executed archive | What can be concluded |
+|---|---|---|
+| Does a UTC date appear in multiple partitions? | **No**; 22/5/5 dates, 88/19/20 scenes in train/validation/test | The frozen split is date-disjoint before crops/augmentation |
+| Are identical source segments reused across partitions? | **0** identical checked HSD segment SHA-256 hashes | No exact source-segment duplicates in the audited records |
+| Are full input or target arrays repeated across partitions? | **0** identical calibrated input tensor hashes; **0** identical label tensor hashes | No exact duplicated checked full-scene tensors |
+| How far apart are train and test observations? | Minimum **126 h (5.25 days)**; **0** train–test scene pairs within 120 h | No direct five-day temporal proximity in the sampled scenes; **not** event separation |
+| Does a seven-day embargo hold? | **26** train–test scene pairs within 168 h (**112** within 240 h) | **No**; the stronger seven-day exclusion is not satisfied |
+| Are neighboring dates different storm systems? | 17 cross-partition date pairs within 10 days; largest fixed-grid severe-mask C3/C4 union IoU **0.04661** | Diagnostic spatial coincidence only; a moving or persistent storm **cannot** be ruled out |
+| Can the transferred RainNet checkpoint be traced to before the study observations? | SHA-256 `71e0e6d7…e575f` matches historical binary model; recorded modification time **2023-07-10 23:06:46 UTC** | Strong archival/chronological evidence against direct reuse of the May–December 2024 study scenes **conditional on archive integrity** |
+| Is full pretraining/event independence proven? | Original item-level pretraining inventory and meteorological storm IDs not fully reconstructed | **No**; an event-group-disjoint audit/rerun is still required for event-independent claims |
+
+**Evidence boundary.** These tests rule out **exact digital duplication** among the checked 2024 partitions and strengthen the chronology of transferred pretrained weights. They **do not** establish independent convective systems, exhaustively enumerate every historic pretraining scene, validate rainfall using BMKG gauges/radar, or justify event-independent statistical significance. The rare C4 class remains largely undetected. Results should be cited only as held-out agreement with **NASA IMERG V07B estimated precipitation categories**.
+
+**Audit documentation:** [Full retrospective audit report, results and reproducibility boundaries](docs/EVENT_AND_PRETRAINING_AUDIT_2026-11-22.md) · [Frozen split](metadata/date_splits_as_executed.csv) · [Source-pair provenance](metadata/paired_scene_provenance.csv) · [2024 RainNet checkpoint provenance](docs/prior_rainnet_pretraining_provenance.md).
 
 ## Evaluation protocol and interpretation (revised Springer manuscript, 2026-11-22)
 
@@ -21,9 +40,9 @@ Reproducibility package supporting a manuscript intended for *SN Computer Scienc
 | Validation | **19 scenes / 5 UTC dates**; best-checkpoint selection only |
 | Test | **20 full scenes / 5 UTC dates**: 2024-05-11, 2024-06-03, 2024-07-03, 2024-08-11, 2024-12-11 |
 | Scored domain | Each test scene is **185×460** cells, padded to **192×464** for inference then cropped to original support; **1,696,520 valid IMERG cells per run** |
-| Split protection | UTC-date grouping **before** training crops/augmentation, identical for all architectures/seeds; **event-level independence remains unverified** |
+| Split protection | UTC-date grouping **before** training crops/augmentation, identical for all architectures/seeds. Retrospective audit: **0 exact checked source/input/label duplicates** across splits; **126 h minimum train–test gap**. **Event-level independence remains unverified** |
 
-The test partition contains **6,909 C3/C4 cells per run**, including **1,232 C4 cells**. Their rarity makes high overall accuracy insufficient to establish heavy-rain detection. Actual date assignments, paired-scene provenance and model checkpoints are in [the executed split manifest](metadata/date_splits_as_executed.csv), [source-pair audit](metadata/paired_scene_provenance.csv) and [all run artifacts](results/runs). Date-disjointness does not prove that weather systems do not cross date boundaries or that the 2024 evaluation scenes never appeared in historical RainNet pretraining.
+The test partition contains **6,909 C3/C4 cells per run**, including **1,232 C4 cells**. Their rarity makes high overall accuracy insufficient to establish heavy-rain detection. Actual date assignments, paired-scene provenance and model checkpoints are in [the executed split manifest](metadata/date_splits_as_executed.csv), [source-pair audit](metadata/paired_scene_provenance.csv) and [all run artifacts](results/runs). Retrospective source/tensor hashes exclude exact cross-split repetition in checked records; the checkpoint matches a historical binary archive dated July 2023, predating the sampled 2024 observations. These indicators **do not prove storm-event independence or establish a complete item-level original pretraining inventory**.
 
 ### Matched comparisons and ablation design
 
@@ -70,13 +89,14 @@ For the severe-event binary collapse, `TPs = sum_(i in S,j in S) M[i,j]`, `FNs =
 - **RQ2 (ordinal):** mean class-distance error on true C3/C4 drops **1.8141 → 1.6098**, but severe CSI **0.0305 → 0.0133**; a lower severity-distance error **does not mean better severe detection**.
 - **RQ3 (combined):** OCSF-RainNet reaches mean Macro IoU **0.2750**, Dice **0.3450**, and severe CSI **0.0537**, absolute deltas of **+0.00847, +0.01781, +0.02312** versus RainNet. However, at seed **2025** RainNet is better on Macro IoU and severe CSI, so this is **not a uniform three-seed improvement or a statistical superiority claim**. C4 IoU is only **0.00027** on average and **zero for two seeds**.
 - **Resources:** OCSF adds **5,580 parameters (+3.91%)**. The separate **untrained-head GPU graph diagnostic** reports median **64.12 vs 54.86 ms** and TensorFlow allocator peak **43.89 vs 13.96 MiB** for OCSF vs RainNet. These are *not* trained deployment benchmarks, and allocator peak is **not total VRAM**.
-- **External validity:** no independent BMKG gauge/radar labels, storm-event-disjoint proof, conclusive prior-pretraining-overlap audit, extra geography/year transfer, or operational nowcasting/alert validation. Seed SDs and millions of spatially correlated pixels do not replace independent meteorological events.
+- **External validity and audit status:** the retrospective V8 audit found no exact checked cross-split digital duplication and traced the reused checkpoint to an archived July 2023 predecessor (SHA-256 match, chronological interpretation conditional on archive integrity). **Storm-event identities, fully reconstructed historical pretraining-scene lineage, independent BMKG gauge/radar labels, extra geography/year transfer and operational nowcasting/alert validity remain unverified.** Seed SDs and millions of correlated pixels do not replace independent meteorological events.
 
 ### Audit trail and manuscript numbering
 
 | Question | Inspectable source |
 |---|---|
 | All jobs really completed? | [18-run independent audit](metadata/18_run_independent_audit.json), [run manifests/results](results/runs) |
+| Were exact cross-split duplicates, time gaps and checkpoint provenance audited? | [V8 retrospective event/pretraining audit](docs/EVENT_AND_PRETRAINING_AUDIT_2026-11-22.md), [executed dates](metadata/date_splits_as_executed.csv), [checkpoint provenance](docs/prior_rainnet_pretraining_provenance.md) |
 | Exactly which evaluation data? | [Executed date split](metadata/date_splits_as_executed.csv), [paired provenance](metadata/paired_scene_provenance.csv) |
 | Are C3/C4 being obscured? | [Per-class scores, all seeds](tables/Table_09_Per_Class_Overlap_18_Runs.csv), [18 confusion images](figures/results/confusion) |
 | Are RQ claims consistent at each seed? | [Matched-seed deltas](tables/Table_11_RQ_Paired_Seed_Deltas.csv), [RQ contrast summary](tables/Table_13_RQ_Summary_Contrasts.csv) |
@@ -407,7 +427,7 @@ All **36 archived experimental graphics** are shown in expandable galleries. Eac
 - Six variants, three seeds and checkpoints: [model source code](src), [Kaggle notebooks](notebooks/kaggle), [best/last checkpoints](checkpoints), [run-level test metrics](results/runs).
 - [NASA IMERG Final V07B DOI](https://doi.org/10.5067/GPM/IMERG/3B-HH/07); [original RainNet study](https://doi.org/10.24507/icicel.18.04.313). The paired 2024 Kaggle dataset is private and raw source data/large prediction ZIPs are not distributed publicly.
 - [Audited model results](metadata/18_run_independent_audit.json) · [dataset provenance](metadata/paired_scene_provenance.csv) · [experimental methodology](docs/REPRODUCE.md) · [figure/table index](docs/FIGURES_AND_TABLES_INDEX.md).
-- [Archived pre-experiment draft DOCX](manuscript/archived_pre_experiment/OCSF-RainNet_pre_127_field_DRAFT.docx) is retained for historical/Mendeley provenance only. It **predates the completed 18-run evidence**. Use the [2026-11-22 revised DOCX](manuscript/current_revision/OCSF_RainNet_Springer_Qualitative_Revision_2026-11-22.docx) for updated Results/Discussion and held-out Figures 10–14; author declarations, Microsoft Word/Mendeley field refresh and remaining external-validity limitations still require verification before journal submission.
+- [Archived pre-experiment draft DOCX](manuscript/archived_pre_experiment/OCSF-RainNet_pre_127_field_DRAFT.docx) is retained for historical/Mendeley provenance only and **predates the completed 18-run evidence**. The [2026-11-22 qualitative revision in this repository](manuscript/current_revision/OCSF_RainNet_Springer_Qualitative_Revision_2026-11-22.docx) may predate the subsequent **V8 audit update** (Methods §3.1.5, Results §4.9 and manuscript Table 13). The final V8 Word source is retained in the research workspace for LaTeX conversion; **do not cite an older repository DOCX as the verified final V8 manuscript**. Funding/competing-interest declarations, Mendeley fields and submission layout must be checked in the final journal source.
 - [Springer readiness checklist](docs/SPRINGER_SUBMISSION_STATUS.md) · [data/code availability](docs/DATA_AND_CODE_AVAILABILITY.md) · [attribution and rights](LICENSE_NOTICE.md).
 
-**Scientific boundary:** Improvements in mean metrics are descriptive for five held-out UTC dates, not an independent BMKG validation or proof of independent meteorological events. C4 IoU remains close to zero; no loss-only ablation or operational alert certification has been performed.
+**Scientific boundary:** Improvements in mean metrics are descriptive for five held-out UTC dates, **not** independent BMKG validation, storm-event-disjoint generalization, or event-level statistical significance. The [V8 audit](docs/EVENT_AND_PRETRAINING_AUDIT_2026-11-22.md) reduces exact-duplication and historical-checkpoint provenance concerns but cannot certify event independence or reconstruct every original pretraining scene. C4 IoU remains close to zero; no loss-only ablation or operational alert certification has been performed.
