@@ -6,6 +6,89 @@ Reproducibility package supporting a manuscript intended for *SN Computer Scienc
 
 > These are comparisons against NASA GPM IMERG Final V07B **satellite-estimated rainfall labels**, not independent BMKG observations. The C4 very-heavy class remains nearly undetected; meteorological-event independence and overlap with the RainNet pretraining collection have not been fully validated.
 
+## Evaluation protocol and interpretation (revised Springer manuscript, 2026-11-22)
+
+**Read this section before citing a score.** The primary evidence is **18 audited trained model–seed evaluations on the same fixed held-out partition**. The satellite-derived IMERG labels are *reference estimates*, not independent BMKG rain-gauge observations. Main scores are **pixel-pooled across all 20 test scenes within each run**, then **summarized across three seeds**; neither diagnostic crops nor GPU timing measurements substitute for those results.
+
+### What data were evaluated?
+
+| Evaluation item | Executed experiment |
+|---|---|
+| Input | Calibrated Himawari-9 AHI Band 13 HSD brightness temperature (BT, Kelvin). Input transform: `clip((320-BT)/140,0,1)`; replicated to three identical channels to match pretrained RainNet input |
+| Reference labels | Co-timed NASA GPM **IMERG Final V07B** estimated precipitation, discretized into five ordered classes C0–C4 (see Table 3); missing/invalid label **255 is masked out** |
+| Total | **127** radiometrically/time-screened paired scenes over **32 UTC dates** in 2024 |
+| Train | **88 scenes / 22 UTC dates** |
+| Validation | **19 scenes / 5 UTC dates**; best-checkpoint selection only |
+| Test | **20 full scenes / 5 UTC dates**: 2024-05-11, 2024-06-03, 2024-07-03, 2024-08-11, 2024-12-11 |
+| Scored domain | Each test scene is **185×460** cells, padded to **192×464** for inference then cropped to original support; **1,696,520 valid IMERG cells per run** |
+| Split protection | UTC-date grouping **before** training crops/augmentation, identical for all architectures/seeds; **event-level independence remains unverified** |
+
+The test partition contains **6,909 C3/C4 cells per run**, including **1,232 C4 cells**. Their rarity makes high overall accuracy insufficient to establish heavy-rain detection. Actual date assignments, paired-scene provenance and model checkpoints are in [the executed split manifest](metadata/date_splits_as_executed.csv), [source-pair audit](metadata/paired_scene_provenance.csv) and [all run artifacts](results/runs). Date-disjointness does not prove that weather systems do not cross date boundaries or that the 2024 evaluation scenes never appeared in historical RainNet pretraining.
+
+### Matched comparisons and ablation design
+
+The **2×2 architectural factor design** uses the same five-class target, evaluation split and seeds **42, 123, 2025**:
+
+| Cross-scale fusion | Output head | Repository model | Main question |
+|---|---|---|---|
+| Off | Multiclass softmax | `plain` | Task-matched multiclass RainNet **control** |
+| On | Multiclass softmax | `fusion` | **RQ1:** fusion-only effect |
+| Off | Cumulative-exceedance ordinal | `ordinal` | **RQ2:** ordinal-only effect |
+| On | Cumulative-exceedance ordinal | `proposed` | **RQ3:** full OCSF-RainNet and component combination |
+
+Additional `unet` and `raunet` runs are task-matched architecture references; **RA-UNet-style** does not assert reproduction of a separate paper's complete experimental protocol. The four RainNet variants start from the designated historical pretrained backbone and the external comparators use their applicable initialization. Shared fitting configuration: 128×128 training crops, batch size 2, maximum 25 epochs, five frozen-backbone warm-up epochs where relevant, early stopping patience 4, **validation-selected best** weights, and a common class-weighted **masked cross-entropy + 0.12 ordinal severity-distance** training objective. The shared loss does **not** isolate the effect of the ordinal head from the loss term: **no loss-only or ungated-fusion ablation was run**. For OCSF-RainNet, best epochs **5, 3, 3** were selected for seeds 42, 123, 2025; this does not establish an improvement from later full-backbone fine-tuning. See [computational protocol](docs/REPRODUCE.md), [per-run manifests](results/runs) and [parameter inventory](tables/Table_04_Model_Parameters.csv).
+
+### Exact quantitative metric definitions
+
+For each trained model–seed run, sum **only valid-label** 5×5 confusion matrices from the **20 held-out scenes** into `M[i,j]`, where **row i is true** C0–C4 and **column j is predicted** C0–C4. For class `k`: `TPk = M[k,k]`; `FNk = sum_j M[k,j] - TPk`; `FPk = sum_i M[i,k] - TPk`.
+
+| Metric | Formula / scoring rule | What it means |
+|---|---|---|
+| IoU per C0–C4 | `TPk/(TPk+FPk+FNk)` | Exact five-class overlap; **C3 and C4 must be shown separately** |
+| Dice per C0–C4 | `2TPk/(2TPk+FPk+FNk)` | Exact class-wise segmentation overlap |
+| Macro IoU / Dice | Arithmetic average of the **five class-specific** IoU/Dice scores | C0 prevalence does not weight the macro mean, but can dominate pixel accuracy |
+| Pixel accuracy | `sum_k M[k,k]/sum_i,j M[i,j]` | Mainly reflects frequent C0; **not a rare-class detection metric** |
+| Severe CSI | `TPs/(TPs+FPs+FNs)` with severe set `S={C3,C4}` | Binary severe-event critical success index (C3 and C4 **combined**) |
+| Severe POD | `TPs/(TPs+FNs)` | Severe-event probability of detection / recall |
+| Severe FAR | `FPs/(TPs+FPs)` | Fraction of **predicted severe** cells that are false alarms, not the conventional false-positive rate |
+| Ordinal MAE — all valid cells | `sum_i,j abs(i-j)*M[i,j]/sum_i,j M[i,j]` | Average absolute **class-index** distance; not physical rainfall-rate MAE |
+| Ordinal MAE — true severe only | `sum_(i=3,4),j abs(i-j)*M[i,j]/sum_(i=3,4),j M[i,j]` | Includes **all true C3/C4 cells**, even when predicted as C0–C2 |
+
+For the severe-event binary collapse, `TPs = sum_(i in S,j in S) M[i,j]`, `FNs = sum_(i in S,j not in S) M[i,j]` and `FPs = sum_(i not in S,j in S) M[i,j]`. A C3↔C4 mix-up is a five-class error but *not* a binary severe CSI miss. **Severe CSI therefore cannot be interpreted as C4 IoU or as mean(C3 IoU,C4 IoU).** A zero-denominator metric for a scene is **undefined/N/A**, not a perfect score. Main run-level pooled severe scores have valid denominators. See [metric lineage](metadata/RQ_EVIDENCE_PROVENANCE.json) and [full saved confusion records](results/runs).
+
+### Which averaging level does each table use?
+
+1. **One run:** pool the valid-cell confusion over all 20 held-out scenes, compute the primary scores **once**. [All 18 run scores](tables/Table_06_All_18_Runs.csv) are the source of the main between-model comparisons.
+2. **Three seeds:** [Table 5](tables/Table_05_Mean_SD_6_Models.csv) gives the **mean ± sample SD (n=3; denominator n−1)** of the run-level scores per model. The ± number is **not** a confidence interval or a test of statistical significance.
+3. **Individual scenes:** [Table 10](tables/Table_10_Per_Scene_Results_360_Entries.csv) has **18×20=360** scene-by-run entries. An unweighted scene-level average of CSI generally differs from CSI recomputed after pooling TP/FP/FN counts.
+4. **Dates:** [Table 14](tables/Table_14_Heldout_Date_Level_Metrics.csv) reports mean **scene-level** CSI per held-out UTC date across observations/seeds (five dates); it is **not** Table 5's pixel-pooled severe CSI.
+5. **Selected images:** revised-manuscript Figures **10–14** use **three post hoc selected 64×96 ROIs, seed 42**. The selected benefit, failure and counterexample illustrate mechanisms and limitations, **not** unbiased model performance. Claims must be based on all 18 runs. See [sampling/provenance audit](docs/QUALITATIVE_TEST_PREDICTIONS.md).
+
+### Evaluation conclusions with their actual limitations
+
+- **RQ1 (fusion):** mean Macro IoU **0.2665 → 0.2701**, but severe CSI **0.0305 → 0.0185**; improvement in localized heavy-rain segmentation **was not established**.
+- **RQ2 (ordinal):** mean class-distance error on true C3/C4 drops **1.8141 → 1.6098**, but severe CSI **0.0305 → 0.0133**; a lower severity-distance error **does not mean better severe detection**.
+- **RQ3 (combined):** OCSF-RainNet reaches mean Macro IoU **0.2750**, Dice **0.3450**, and severe CSI **0.0537**, absolute deltas of **+0.00847, +0.01781, +0.02312** versus RainNet. However, at seed **2025** RainNet is better on Macro IoU and severe CSI, so this is **not a uniform three-seed improvement or a statistical superiority claim**. C4 IoU is only **0.00027** on average and **zero for two seeds**.
+- **Resources:** OCSF adds **5,580 parameters (+3.91%)**. The separate **untrained-head GPU graph diagnostic** reports median **64.12 vs 54.86 ms** and TensorFlow allocator peak **43.89 vs 13.96 MiB** for OCSF vs RainNet. These are *not* trained deployment benchmarks, and allocator peak is **not total VRAM**.
+- **External validity:** no independent BMKG gauge/radar labels, storm-event-disjoint proof, conclusive prior-pretraining-overlap audit, extra geography/year transfer, or operational nowcasting/alert validation. Seed SDs and millions of spatially correlated pixels do not replace independent meteorological events.
+
+### Audit trail and manuscript numbering
+
+| Question | Inspectable source |
+|---|---|
+| All jobs really completed? | [18-run independent audit](metadata/18_run_independent_audit.json), [run manifests/results](results/runs) |
+| Exactly which evaluation data? | [Executed date split](metadata/date_splits_as_executed.csv), [paired provenance](metadata/paired_scene_provenance.csv) |
+| Are C3/C4 being obscured? | [Per-class scores, all seeds](tables/Table_09_Per_Class_Overlap_18_Runs.csv), [18 confusion images](figures/results/confusion) |
+| Are RQ claims consistent at each seed? | [Matched-seed deltas](tables/Table_11_RQ_Paired_Seed_Deltas.csv), [RQ contrast summary](tables/Table_13_RQ_Summary_Contrasts.csv) |
+| Does ordinal MAE improve on actual missed severe cells? | [18-run ordinal-distance table](tables/Table_08_Ordinal_Distance_Errors_18_Runs.csv), [metric definitions](metadata/RQ_EVIDENCE_PROVENANCE.json) |
+| Does severe CSI vary by test date? | [360 scene scores](tables/Table_10_Per_Scene_Results_360_Entries.csv), [five-date summary](tables/Table_14_Heldout_Date_Level_Metrics.csv) |
+| Are displayed crops genuine and matched? | [ROI selection audit](docs/QUALITATIVE_TEST_PREDICTIONS.md), [ROI counts](tables/Table_11_Qualitative_ROI_Severe_Error.csv), [matching full-scene scores](tables/Table_12_Matched_Full_Scene_Severe_Metrics.csv) |
+| Where is timing documented? | [GPU table](tables/Table_07_GPU_Inference_Profiling.csv), [profiling notebook](notebooks/kaggle/gpu_profiling.ipynb) |
+
+**Avoid duplicate figure/table numbers:** The figures named `figures/results/Figure_10_*`–`Figure_13_*` are older **supplementary repository diagnostics**, **not** the revised-manuscript Figures 10–14. The revised qualitative figures are under [`figures/manuscript_qualitative/`](figures/manuscript_qualitative). Likewise `Table_11_RQ_*` / `Table_12_RQ_*` are supplemental RQ tables, while `Table_11_Qualitative_*` / `Table_12_Matched_*` hold the revised manuscript's qualitative ROI and full-scene evidence. Cite each artifact by descriptive title and exact path, not the number alone.
+
+---
+
 ## Figures 1–3: exact images from the attached Springer manuscript
 
 The following **three unchanged original PNGs** are byte-for-byte identical to the figures embedded in the attached Word manuscript. Their checksums are in [source figure verification](metadata/MANUSCRIPT_FIGURE_VERIFICATION.json). The images were not redesigned or substituted.
@@ -30,11 +113,11 @@ The architecture is displayed exactly as in the paper: separate RainNet control 
 
 **Additional, post-experiment methodology figures (not substituted above):** [calibrated HSD representative scene](figures/methods/Figure_1_Calibrated_2024_Representative_Scene.png), [revised framework](figures/methods/Figure_2_Research_Framework_Updated.png), [revised method architecture](figures/methods/Figure_3_Model_Architecture_Updated.png).
 
-## New held-out image evidence (manuscript Figures 10–14)
+## New held-out image evidence (revised manuscript Figures 10–14, distinct from supplementary result plots)
 
 The revised manuscript and all figures below use actual seed-42 held-out predictions from the 18 Kaggle experiments. The Figure 1–3 images above are preserved unchanged.
 
-**[Download latest complete Springer manuscript (DOCX)](manuscript/current_revision/OCSF_RainNet_Springer_Qualitative_Revision_2026-11-22.docx)**
+**[Read latest revised Springer manuscript (DOCX; author declarations and external validity checks pending)](manuscript/current_revision/OCSF_RainNet_Springer_Qualitative_Revision_2026-11-22.docx)**
 
 ![Figure 10 — positive severe detection](figures/manuscript_qualitative/Figure_10_Qualitative_gain.png)
 
@@ -50,7 +133,7 @@ The three examples were selected post hoc, not randomly: a local gain (2024-12-1
 
 ## RQ1–RQ3: experimentally supported answers
 
-The manuscript Introduction asks (RQ1) whether gated cross-scale fusion improves localized high-intensity regions; (RQ2) whether an ordinal head reduces intensity-severity classification errors; and (RQ3) whether fusion plus ordinal modeling gives consistent benefits without excessive complexity. Comparisons below use the same train/validation/test dates and seeds **42, 123, 2025**.
+The revised manuscript evaluates **RQ1:** overall and severe-class effects of fusion; **RQ2:** severity-distance versus severe-detection effects of the ordinal head; and **RQ3:** combined-component outcomes across seeds and computational trade-offs. No RQ assumes superiority in advance. All comparisons use the same train/validation/test date split and seeds **42, 123, 2025**.
 
 | RQ | Component vs. RainNet control | Δ mean Macro IoU | Δ mean severe CSI | Δ mean ordinal distance on true C3/C4 cells (lower better) | Improved Macro IoU seeds | Evidence-based verdict |
 |---|---|---:|---:|---:|---:|---|
@@ -184,7 +267,7 @@ This is the arithmetic mean of scene-level CSI across observations/seeds for a d
 | 13 | [Table_13_RQ_Summary_Contrasts.csv](tables/Table_13_RQ_Summary_Contrasts.csv) | Primary RQ deltas and stability counts |
 | 14 | [Table_14_Heldout_Date_Level_Metrics.csv](tables/Table_14_Heldout_Date_Level_Metrics.csv) | Test-date variability |
 
-## All completed experimental Figures 4–13
+## Supplementary experimental Figures 4–13 (repository plot numbering)
 
 These figures supplement the **unaltered manuscript Figures 1–3** above. Source/target class frequencies are not model predictions; GPU performance charts do not claim trained-model accuracy.
 
@@ -324,7 +407,7 @@ All **36 archived experimental graphics** are shown in expandable galleries. Eac
 - Six variants, three seeds and checkpoints: [model source code](src), [Kaggle notebooks](notebooks/kaggle), [best/last checkpoints](checkpoints), [run-level test metrics](results/runs).
 - [NASA IMERG Final V07B DOI](https://doi.org/10.5067/GPM/IMERG/3B-HH/07); [original RainNet study](https://doi.org/10.24507/icicel.18.04.313). The paired 2024 Kaggle dataset is private and raw source data/large prediction ZIPs are not distributed publicly.
 - [Audited model results](metadata/18_run_independent_audit.json) · [dataset provenance](metadata/paired_scene_provenance.csv) · [experimental methodology](docs/REPRODUCE.md) · [figure/table index](docs/FIGURES_AND_TABLES_INDEX.md).
-- [Archived draft DOCX](manuscript/archived_pre_experiment/OCSF-RainNet_pre_127_field_DRAFT.docx) preserves its original Mendeley fields. It **does not yet contain all completed results**; Methods, Discussion, Conclusion, Figures and tables must be reconciled before Springer submission.
+- [Archived pre-experiment draft DOCX](manuscript/archived_pre_experiment/OCSF-RainNet_pre_127_field_DRAFT.docx) is retained for historical/Mendeley provenance only. It **predates the completed 18-run evidence**. Use the [2026-11-22 revised DOCX](manuscript/current_revision/OCSF_RainNet_Springer_Qualitative_Revision_2026-11-22.docx) for updated Results/Discussion and held-out Figures 10–14; author declarations, Microsoft Word/Mendeley field refresh and remaining external-validity limitations still require verification before journal submission.
 - [Springer readiness checklist](docs/SPRINGER_SUBMISSION_STATUS.md) · [data/code availability](docs/DATA_AND_CODE_AVAILABILITY.md) · [attribution and rights](LICENSE_NOTICE.md).
 
 **Scientific boundary:** Improvements in mean metrics are descriptive for five held-out UTC dates, not an independent BMKG validation or proof of independent meteorological events. C4 IoU remains close to zero; no loss-only ablation or operational alert certification has been performed.
