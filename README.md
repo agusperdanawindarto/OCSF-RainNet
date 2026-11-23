@@ -2,9 +2,32 @@
 
 **Ordinal Cross-Scale Fusion for IMERG-Supervised Rainfall Intensity Segmentation from Himawari Imagery**
 
-Reproducibility package supporting a manuscript intended for *SN Computer Science* (Springer Nature). **127 calibrated Himawari–IMERG pairs, 32 UTC dates, and 18/18 finished and audited Kaggle model×seed experiments.**
+Reproducibility package supporting a manuscript intended for *SN Computer Science* (Springer Nature). **127 calibrated Himawari–IMERG pairs, 32 UTC dates, and 24/24 completed and audited Kaggle model×seed experiments (18 original + six supplementary runs across eight configurations).**
 
 > These are comparisons against NASA GPM IMERG Final V07B **satellite-estimated rainfall labels**, not independent BMKG observations. The C4 very-heavy class remains nearly undetected. A retrospective V8 audit ruled out exact checked cross-split digital duplicates and identified a matching pre-2024 historical RainNet checkpoint, but **meteorological-event independence and exhaustive item-level pretraining provenance remain unverified**. See the [event/provenance audit](docs/EVENT_AND_PRETRAINING_AUDIT_2026-11-22.md).
+
+## V11 manuscript evidence update — 23 November 2026 (24 verified Kaggle GPU runs)
+
+The **original 18/18** runs are unchanged: four RainNet factorial variants, U-Net and RA-UNet-style at seeds **42, 123 and 2025**. The supplemental comparison added six independently audited Kaggle GPU runs: **DeepLabv3+-style** and **SegFormer-B0-style**, each at the same three seeds. **All eight configurations use the same calibrated 127-scene Himawari-9 AHI B13/IMERG Final V07B corpus, 88/19/20 scene split, five held-out UTC dates and five-class target definitions.** New results were reconstructed from the per-run 5×5 confusion matrices. The original 18 checkpoints and original plotted experiments were not changed.
+
+| Evaluated model | Parameters | Macro IoU (mean ± SD) | Macro Dice (mean ± SD) | Severe CSI (mean ± SD) | C4 IoU mean |
+|---|---:|---:|---:|---:|---:|
+| OCSF-RainNet | 148,217 | 0.2750 ± 0.0014 | 0.3450 ± 0.0041 | 0.0537 ± 0.0148 | 0.000270 |
+| DeepLabv3+-style | 203,349 | 0.2712 ± 0.0039 | 0.3360 ± 0.0074 | 0.0276 ± 0.0162 | 0.000000 |
+| Fusion-only | 148,234 | 0.2701 ± 0.0081 | 0.3350 ± 0.0143 | 0.0185 ± 0.0290 | 0.000000 |
+| Ordinal-only | 142,632 | 0.2691 ± 0.0088 | 0.3331 ± 0.0142 | 0.0133 ± 0.0231 | 0.000000 |
+| U-Net | 485,853 | 0.2685 ± 0.0011 | 0.3308 ± 0.0022 | 0.0000 ± 0.0000 | 0.000000 |
+| RainNet | 142,637 | 0.2665 ± 0.0213 | 0.3271 ± 0.0393 | 0.0305 ± 0.0529 | 0.000000 |
+| RA-UNet-style | 508,249 | 0.2648 ± 0.0096 | 0.3228 ± 0.0164 | 0.0027 ± 0.0027 | 0.000000 |
+| SegFormer-B0-style | 3,451,109 | 0.2624 ± 0.0005 | 0.3225 ± 0.0008 | 0.0010 ± 0.0016 | 0.000000 |
+
+**Interpretation:** OCSF-RainNet ranks first on *three-seed mean* macro IoU, macro Dice and severe CSI among these eight specifically implemented configurations. DeepLabv3+-style is second on mean macro IoU (0.2712) but below the RainNet control on severe CSI (0.0276 vs 0.0305). SegFormer-B0-style averages 0.2624 macro IoU and 0.0010 severe CSI. Both new architectures have **C4 IoU exactly zero at each seed**; OCSF-RainNet itself remains near zero (mean C4 IoU 0.00027). A RainNet baseline win over OCSF at seed 2025 also precludes a claim of uniform superiority.
+
+**Critical fairness limit:** DeepLabv3+-style (203,349 parameters) and SegFormer-B0-style (3,451,109 parameters) were **independently implemented and randomly initialized**; they are **not official pretrained, code-identical replications** of their original publications. RainNet-derived variants begin from the verified historic transferred checkpoint. Architectural attribution and claims of general SOTA dominance are therefore unjustified. Scores measure agreement with **IMERG satellite-estimated labels**, not BMKG gauge/radar observations, and only five held-out UTC dates are available.
+
+**New inspectable evidence:** [24-run methods and caveats](docs/SOTA_24_RUN_COMPARISON_2026-11-23.md) · [structured validation audit](results/sota_2026-11-23/OCSF_24_RUN_PUBLIC_AUDIT.json) · [8-model mean and SD](results/sota_2026-11-23/eight_model_mean_sd.csv) · [6 per-seed results](results/sota_2026-11-23/new_six_seed_metrics.csv) · [6 test confusion matrices](results/sota_2026-11-23/) · [6 executable Kaggle notebooks](notebooks/kaggle/sota_2026-11-23/) · [external model implementations](src/models/ocsf_sota_external_models.py).
+
+**Figures and journal manuscript:** Fig. 2 is intentionally the original six-branch/18-run core (two later comparator families are **not drawn**); Fig. 3 concerns only RainNet control vs OCSF. The **V11 paper updates Tables 4–6 and Fig. 4–5 for all eight configurations**. Repository image galleries of the original 18 runs are historical subsets, not all 24 runs. The final V11 Word file is delivered separately and the older repository DOCX should not be used as the current manuscript.
 
 ## Retrospective split integrity and checkpoint provenance (V8 audit, 2026-11-22)
 
@@ -27,7 +50,7 @@ Reproducibility package supporting a manuscript intended for *SN Computer Scienc
 
 ## Evaluation protocol and interpretation (revised Springer manuscript, 2026-11-22)
 
-**Read this section before citing a score.** The primary evidence is **18 audited trained model–seed evaluations on the same fixed held-out partition**. The satellite-derived IMERG labels are *reference estimates*, not independent BMKG rain-gauge observations. Main scores are **pixel-pooled across all 20 test scenes within each run**, then **summarized across three seeds**; neither diagnostic crops nor GPU timing measurements substitute for those results.
+**Read this section before citing a score.** The complete evidence is **24 audited trained model–seed evaluations on the same frozen held-out partition**: 18 original factorial/reference comparisons plus six additional external comparisons. The satellite-derived IMERG labels are *reference estimates*, not independent BMKG rain-gauge observations. Main scores are **pixel-pooled across all 20 test scenes within each run**, then **summarized across three seeds**; neither diagnostic crops nor GPU timing measurements substitute for those results.
 
 ### What data were evaluated?
 
@@ -121,7 +144,7 @@ Figure 1 remains the separately labeled historical January 2024 pilot. **Figures
 
 The original pilot illustrates the archived JPEG, IMERG rate, thresholded five-class target, and class distribution; this is not the input dataset used by the later full calibrated experiment.
 
-### Figure 2. Completed calibrated research framework (manuscript V8)
+### Figure 2. Original six-branch calibrated research framework (retained in V11)
 
 Figure 2 traces the common source screening and date-disjoint assignment, the four RainNet-family architectural variants, the two external comparators and the shared held-out evaluation. All six models receive the same 127 calibrated HSD–IMERG pairs, fixed train/validation/test partitions and five IMERG categories, with training repeated at seeds 42, 123 and 2025.
 
@@ -129,11 +152,11 @@ Figure 2 traces the common source screening and date-disjoint assignment, the fo
 
 *Fig. 2. Research framework for the completed 2024 HSD-calibrated Himawari–IMERG study. The same 127 source–target pairs, UTC-date partitions and IMERG labels are shared across the RainNet baseline, fusion-only, ordinal-only, combined OCSF-RainNet and two external comparators. Eighteen GPU runs were completed; event independence and pretraining overlap remain methodological limitations.*
 
-The schematic represents completed model comparisons, **not** six independently collected test sets. Arrows merge into the same held-out evaluation. The V8 [digital-duplication / temporal-proximity audit](docs/EVENT_AND_PRETRAINING_AUDIT_2026-11-22.md) provides additional evidence but does not establish independent meteorological systems.
+The schematic represents the **original six-configuration 18-run study**, **not** six independently collected test sets and **not** the complete eight-model V11 extension. The two new architecture families reuse the original data and test partition. Arrows merge into the same held-out evaluation. The V8 [digital-duplication / temporal-proximity audit](docs/EVENT_AND_PRETRAINING_AUDIT_2026-11-22.md) provides additional evidence but does not establish independent meteorological systems.
 
 [Open Fig. 2 vector source](figures/manuscript/Figure_2_V8.svg) · [Historical pre-V8 Fig. 2](figures/manuscript/legacy_preV8/Figure_2.png).
 
-### Figure 3. Task-matched RainNet control versus proposed OCSF-RainNet (manuscript V8)
+### Figure 3. Task-matched RainNet control versus proposed OCSF-RainNet (retained in V11)
 
 Figure 3 compares **two separately optimized networks** with the same checkpoint-derived residual RainNet encoder, bridge and decoder. Both receive calibrated Himawari-9 AHI Band 13 brightness-temperature inputs (replicated across three channels for checkpoint compatibility) and the same IMERG V07B five-category targets. The task-matched control uses a five-class softmax head; OCSF-RainNet adds the context-gated cross-scale skip-feature fusion and an ordered cumulative-exceedance output head.
 
@@ -221,6 +244,8 @@ The ordinal-distance metrics were **computed from the actual 5×5 test confusion
 | proposed | 148,217 | OCSF-RainNet |
 | unet | 485,853 | External U-Net |
 | raunet | 508,249 | RA-UNet-style |
+| deeplabv3plus | 203,349 | DeepLabv3+-style, randomly initialized |
+| segformerb0 | 3,451,109 | SegFormer-B0-style, randomly initialized |
 
 ### Table 5 — Held-out comparative results (mean ± sample SD, three seeds)
 
@@ -232,8 +257,10 @@ The ordinal-distance metrics were **computed from the actual 5×5 test confusion
 | OCSF-RainNet | 0.2750 ± 0.0014 | 0.3450 ± 0.0041 | 0.0537 ± 0.0148 | 0.0390 ± 0.0107 | 0.0003 ± 0.0005 |
 | U-Net | 0.2685 ± 0.0011 | 0.3308 ± 0.0022 | 0.0000 ± 0.0000 | 0.0000 ± 0.0000 | 0.0000 ± 0.0000 |
 | RA-UNet-style | 0.2648 ± 0.0096 | 0.3228 ± 0.0164 | 0.0027 ± 0.0027 | 0.0019 ± 0.0020 | 0.0000 ± 0.0000 |
+| DeepLabv3+-style | 0.2712 ± 0.0039 | 0.3360 ± 0.0074 | 0.0276 ± 0.0162 | 0.02285 ± 0.01274 | 0.0000 ± 0.0000 |
+| SegFormer-B0-style | 0.2624 ± 0.0005 | 0.3225 ± 0.0008 | 0.0010 ± 0.0016 | 0.00098 ± 0.00170 | 0.0000 ± 0.0000 |
 
-### Table 6 — All 18 Kaggle training/evaluation runs
+### Table 6 — All 24 Kaggle training/evaluation runs (18 original + six supplementary)
 
 | Model | Seed | Best epoch | Macro IoU | Macro Dice | Severe CSI | C3 IoU | C4 IoU |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -255,6 +282,12 @@ The ordinal-distance metrics were **computed from the actual 5×5 test confusion
 | RA-UNet-style | 42 | 11 | 0.2716 | 0.3342 | 0.0027 | 0.0016 | 0.0000 |
 | RA-UNet-style | 123 | 11 | 0.2538 | 0.3041 | 0.0000 | 0.0000 | 0.0000 |
 | RA-UNet-style | 2025 | 8 | 0.2689 | 0.3302 | 0.0055 | 0.0040 | 0.0000 |
+| DeepLabv3+-style | 42 | 8 | 0.2757 | 0.3441 | 0.0269 | 0.0241 | 0.0000 |
+| DeepLabv3+-style | 123 | 6 | 0.2692 | 0.3341 | 0.0442 | 0.0349 | 0.0000 |
+| DeepLabv3+-style | 2025 | 9 | 0.2686 | 0.3296 | 0.0118 | 0.0095 | 0.0000 |
+| SegFormer-B0-style | 42 | 10 | 0.2630 | 0.3233 | 0.0000 | 0.0000 | 0.0000 |
+| SegFormer-B0-style | 123 | 11 | 0.2620 | 0.3217 | 0.0029 | 0.0029 | 0.0000 |
+| SegFormer-B0-style | 2025 | 6 | 0.2622 | 0.3224 | 0.0000 | 0.0000 | 0.0000 |
 
 ### Table 7 — GPU architecture profiling (192×464, batch 1)
 
@@ -365,7 +398,7 @@ Evidence for RQ1 / RQ2 / RQ3.
 
 Evidence for All RQs; limited test dates.
 
-## All 18 confusion matrices and 18 learning curves
+## Original 18 confusion matrices and 18 learning curves (six new confusion matrices linked in V11 evidence)
 
 All **36 archived experimental graphics** are shown in expandable galleries. Each is linked to its full-resolution file; corresponding per-run loss histories, confusion CSVs, test metrics and checkpoints remain available.
 
@@ -438,10 +471,10 @@ All **36 archived experimental graphics** are shown in expandable galleries. Eac
 ## Code, datasets, availability and journal status
 
 - Actual experiment: 127 paired **calibrated Himawari-9 AHI B13 HSD brightness-temperature scenes** and NASA IMERG Final V07B supervision; 88 training / 19 validation / 20 test scenes, grouped by UTC date.
-- Six variants, three seeds and checkpoints: [model source code](src), [Kaggle notebooks](notebooks/kaggle), [best/last checkpoints](checkpoints), [run-level test metrics](results/runs).
+- Eight configurations, three seeds, 24 audited model–seed runs: [original model source](src), [original Kaggle notebooks](notebooks/kaggle), [original checkpoints](checkpoints), [18 original run-level records](results/runs), [six new notebooks](notebooks/kaggle/sota_2026-11-23), [new model implementations](src/models/ocsf_sota_external_models.py) and [six supplemental run records](results/sota_2026-11-23).
 - [NASA IMERG Final V07B DOI](https://doi.org/10.5067/GPM/IMERG/3B-HH/07); [original RainNet study](https://doi.org/10.24507/icicel.18.04.313). The paired 2024 Kaggle dataset is private and raw source data/large prediction ZIPs are not distributed publicly.
 - [Audited model results](metadata/18_run_independent_audit.json) · [dataset provenance](metadata/paired_scene_provenance.csv) · [experimental methodology](docs/REPRODUCE.md) · [figure/table index](docs/FIGURES_AND_TABLES_INDEX.md).
-- [Archived pre-experiment draft DOCX](manuscript/archived_pre_experiment/OCSF-RainNet_pre_127_field_DRAFT.docx) is retained for historical/Mendeley provenance only and **predates the completed 18-run evidence**. The [2026-11-22 qualitative revision in this repository](manuscript/current_revision/OCSF_RainNet_Springer_Qualitative_Revision_2026-11-22.docx) may predate the subsequent **V8 audit update** (Methods §3.1.5, Results §4.9 and manuscript Table 13). The final V8 Word source is retained in the research workspace for LaTeX conversion; **do not cite an older repository DOCX as the verified final V8 manuscript**. Funding/competing-interest declarations, Mendeley fields and submission layout must be checked in the final journal source.
+- [Archived pre-experiment draft DOCX](manuscript/archived_pre_experiment/OCSF-RainNet_pre_127_field_DRAFT.docx) is retained for historical/Mendeley provenance only and **predates the completed 18-run evidence**. The [2026-11-22 qualitative revision in this repository](manuscript/current_revision/OCSF_RainNet_Springer_Qualitative_Revision_2026-11-22.docx) may predate the subsequent **V8 audit update** (Methods §3.1.5, Results §4.9 and manuscript Table 13). The V11 Word revision with all 24 evaluated runs is provided separately for LaTeX conversion; **do not cite the old repository DOCX as the current V11 manuscript**. Funding/competing-interest declarations, Mendeley fields and submission layout must be checked in the final journal source.
 - [Springer readiness checklist](docs/SPRINGER_SUBMISSION_STATUS.md) · [data/code availability](docs/DATA_AND_CODE_AVAILABILITY.md) · [attribution and rights](LICENSE_NOTICE.md).
 
 **Scientific boundary:** Improvements in mean metrics are descriptive for five held-out UTC dates, **not** independent BMKG validation, storm-event-disjoint generalization, or event-level statistical significance. The [V8 audit](docs/EVENT_AND_PRETRAINING_AUDIT_2026-11-22.md) reduces exact-duplication and historical-checkpoint provenance concerns but cannot certify event independence or reconstruct every original pretraining scene. C4 IoU remains close to zero; no loss-only ablation or operational alert certification has been performed.
