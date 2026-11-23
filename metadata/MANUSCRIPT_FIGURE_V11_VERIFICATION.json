@@ -1,0 +1,13 @@
+{
+  "manuscript_version": "OCSF-RainNet V11 / 24 audited model-seed experiments",
+  "user_word_sha256": "2a4c59166af609381c212b3772bdbaa31bc91c7acfaf0a1ecb86d7d64adacc9f",
+  "figure": 2,
+  "canonical_png": "figures/manuscript/Figure_2.png",
+  "png_sha256": "48800407322646b60649710d1f36515d43524b9dc16152fd6e275a15a73f9622",
+  "svg": "figures/manuscript/Figure_2_V11.svg",
+  "svg_sha256": "d66a4dfe064967ed63f087ac21eb4cad7f0d48022eb96ce657765307a5a1f23f",
+  "raster": "resvg-py 6600x4238, 600-dpi PNG",
+  "previous": "figures/manuscript/legacy_18run/Figure_2_18run.png",
+  "scope": "127 calibrated paired scenes, original six configuration x 3 seed plus two supplementary configuration x 3 seed; 24 complete run diagram",
+  "limits": "No storm-event independence proof, no original-pretraining item-level manifest, no ground BMKG truth"
+}

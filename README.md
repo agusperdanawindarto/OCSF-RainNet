@@ -27,7 +27,7 @@ The **original 18/18** runs are unchanged: four RainNet factorial variants, U-Ne
 
 **New inspectable evidence:** [24-run methods and caveats](docs/SOTA_24_RUN_COMPARISON_2026-11-23.md) · [structured validation audit](results/sota_2026-11-23/OCSF_24_RUN_PUBLIC_AUDIT.json) · [8-model mean and SD](results/sota_2026-11-23/eight_model_mean_sd.csv) · [6 per-seed results](results/sota_2026-11-23/new_six_seed_metrics.csv) · [6 test confusion matrices](results/sota_2026-11-23/) · [6 executable Kaggle notebooks](notebooks/kaggle/sota_2026-11-23/) · [external model implementations](src/models/ocsf_sota_external_models.py).
 
-**Figures and journal manuscript:** Fig. 2 is intentionally the original six-branch/18-run core (two later comparator families are **not drawn**); Fig. 3 concerns only RainNet control vs OCSF. The **V11 paper updates Tables 4–6 and Fig. 4–5 for all eight configurations**. Repository image galleries of the original 18 runs are historical subsets, not all 24 runs. The final V11 Word file is delivered separately and the older repository DOCX should not be used as the current manuscript.
+**Figures and journal manuscript:** Fig. 2 is intentionally the original six-branch/18-run core (two later comparator families are **not drawn**); Fig. 3 concerns only RainNet control vs OCSF. The **V11 paper updates Fig. 2, Fig. 4–5 and Tables 4–6 for all eight configurations**. Repository image galleries of the original 18 runs are historical subsets, not all 24 runs. The final V11 Word file is delivered separately and the older repository DOCX should not be used as the current manuscript.
 
 ## Retrospective split integrity and checkpoint provenance (V8 audit, 2026-11-22)
 
@@ -132,9 +132,9 @@ For the severe-event binary collapse, `TPs = sum_(i in S,j in S) M[i,j]`, `FNs =
 
 ---
 
-## Figures 1–3: corrected to the final V8 Springer manuscript
+## Figures 1–3: synchronized with the 24-run Springer manuscript V11
 
-Figure 1 remains the separately labeled historical January 2024 pilot. **Figures 2 and 3 now display the completed-study illustrations corresponding to the V8 Springer manuscript**, rather than the earlier draft (which incorrectly implied that training was incomplete and pictured the legacy JPEG input). The original pre-V8 figure files remain under [legacy_preV8](figures/manuscript/legacy_preV8); [original-figure provenance](metadata/MANUSCRIPT_FIGURE_VERIFICATION.json) is preserved. The revised artwork is available in both [PNG and vector SVG](metadata/MANUSCRIPT_FIGURE_V8_VERIFICATION.json). V8 source figure content and layout were verified against the Word-embedded source; repository PNGs were freshly rasterized from those vectors and are **not claimed to be byte-identical to the DOCX-embedded PNG files**.
+Figure 1 remains the clearly labeled historical January 2024 JPEG pilot. **Figure 2 now illustrates the complete eight-configuration/24-run V11 research framework**; Fig. 3 retains the unchanged RainNet-versus-OCSF architecture. Original six-branch Fig. 2 artwork is preserved under [legacy_18run](figures/manuscript/legacy_18run), and earlier manuscript draft art under [legacy_preV8](figures/manuscript/legacy_preV8). The V11 600-dpi PNG is regenerated from a [vector SVG source](figures/manuscript/Figure_2_V11.svg) and is not asserted to be byte-identical to the Word-embedded PNG. See [V11 figure provenance](metadata/MANUSCRIPT_FIGURE_V11_VERIFICATION.json).
 
 **Figure narratives below follow the revised manuscript:** a short introduction precedes each figure, followed by the caption and an interpretation limited to the completed experiments.
 
@@ -144,17 +144,17 @@ Figure 1 remains the separately labeled historical January 2024 pilot. **Figures
 
 The original pilot illustrates the archived JPEG, IMERG rate, thresholded five-class target, and class distribution; this is not the input dataset used by the later full calibrated experiment.
 
-### Figure 2. Original six-branch calibrated research framework (retained in V11)
+### Figure 2. Completed eight-configuration research framework (manuscript V11)
 
-Figure 2 traces the common source screening and date-disjoint assignment, the four RainNet-family architectural variants, the two external comparators and the shared held-out evaluation. All six models receive the same 127 calibrated HSD–IMERG pairs, fixed train/validation/test partitions and five IMERG categories, with training repeated at seeds 42, 123 and 2025.
+Figure 2 traces two independently executed model groups under the same 127 calibrated Himawari-9 HSD–IMERG pairs, frozen date-disjoint partitions and five IMERG label categories: the original RainNet control/factorial ablations plus U-Net and RA-UNet-style (**18 original runs**); and two later task-matched, randomly initialized DeepLabv3+-style and SegFormer-B0-style comparators (**six additional runs**). Every model has three seeds and the same 20 held-out test scenes.
 
-![Figure 2 V8 — calibrated Himawari–IMERG research framework, six model branches and 18 completed GPU runs](figures/manuscript/Figure_2.png)
+![Figure 2 V11 — shared Himawari–IMERG study framework with eight model branches and 24 completed GPU evaluations](figures/manuscript/Figure_2.png)
 
-*Fig. 2. Research framework for the completed 2024 HSD-calibrated Himawari–IMERG study. The same 127 source–target pairs, UTC-date partitions and IMERG labels are shared across the RainNet baseline, fusion-only, ordinal-only, combined OCSF-RainNet and two external comparators. Eighteen GPU runs were completed; event independence and pretraining overlap remain methodological limitations.*
+*Fig. 2. Research framework of the completed 24-run 2024 calibrated Himawari–IMERG study. The 127 paired scenes, five IMERG rainfall categories, 88/19/20 date-disjoint scene partition and seeds 42/123/2025 are shared across the six original configurations (18 runs) and the two supplementary comparator families (six runs). All eight configurations are evaluated on the same 20 held-out scenes. Event independence, original-pretraining item lineage and ground-measured rainfall validity remain unverified.*
 
-The schematic represents the **original six-configuration 18-run study**, **not** six independently collected test sets and **not** the complete eight-model V11 extension. The two new architecture families reuse the original data and test partition. Arrows merge into the same held-out evaluation. The V8 [digital-duplication / temporal-proximity audit](docs/EVENT_AND_PRETRAINING_AUDIT_2026-11-22.md) provides additional evidence but does not establish independent meteorological systems.
+The figure conveys the **actual eight-configuration evidence** and convergent evaluation, **not eight independently collected test datasets or published SOTA checkpoint equivalence**. The first six completed models and 18 runs remain unchanged; the extra six runs are additive. The V8 retrospective [split and provenance audit](docs/EVENT_AND_PRETRAINING_AUDIT_2026-11-22.md) does not establish independent storm-event identities.
 
-[Open Fig. 2 vector source](figures/manuscript/Figure_2_V8.svg) · [Historical pre-V8 Fig. 2](figures/manuscript/legacy_preV8/Figure_2.png).
+[Open Fig. 2 V11 vector source](figures/manuscript/Figure_2_V11.svg) · [original 18-run framework](figures/manuscript/legacy_18run/Figure_2_18run.png) · [V11 figure audit](metadata/MANUSCRIPT_FIGURE_V11_VERIFICATION.json).
 
 ### Figure 3. Task-matched RainNet control versus proposed OCSF-RainNet (retained in V11)
 
@@ -168,7 +168,7 @@ Pale-blue boxes indicate inherited features; gold boxes identify the proposed co
 
 [Open Fig. 3 vector source](figures/manuscript/Figure_3_V8.svg) · [Historical pre-V8 Fig. 3](figures/manuscript/legacy_preV8/Figure_3.png).
 
-**Method figure copies and legacy records:** [calibrated HSD scene](figures/methods/Figure_1_Calibrated_2024_Representative_Scene.png), [V8 framework copy](figures/methods/Figure_2_Research_Framework_Updated.png), and [V8 architecture copy](figures/methods/Figure_3_Model_Architecture_Updated.png). Older method drawings are retained under [methods/legacy_preV8](figures/methods/legacy_preV8). See the [V8 figure metadata](metadata/MANUSCRIPT_FIGURE_V8_VERIFICATION.json) for source-image hashes and rasterization provenance.
+**Method figure copies and archives:** [calibrated HSD example](figures/methods/Figure_1_Calibrated_2024_Representative_Scene.png), [V11 24-run framework](figures/methods/Figure_2_Research_Framework_Updated.png), and [retained Fig. 3 network schematic](figures/methods/Figure_3_Model_Architecture_Updated.png). The original 18-run Fig. 2 remains in [legacy_18run](figures/manuscript/legacy_18run) and its hash audit has been retained. See [V11 figure verification](metadata/MANUSCRIPT_FIGURE_V11_VERIFICATION.json).
 
 ## New held-out image evidence (revised manuscript Figures 10–14, distinct from supplementary result plots)
 
