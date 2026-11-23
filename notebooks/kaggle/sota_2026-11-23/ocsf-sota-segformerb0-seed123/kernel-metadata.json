@@ -1,0 +1,15 @@
+{
+  "id": "agusperdana/ocsf-sota-segformerb0-seed123",
+  "title": "ocsf-sota-segformerb0-seed123",
+  "code_file": "ocsf_sota_train.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": false,
+  "dataset_sources": [
+    "agusperdana/ocsf-rainnet-calibrated-2024"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}
